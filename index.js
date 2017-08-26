@@ -3,6 +3,7 @@ var express = require('express');
 var app = express();
 var pg = require('pg');
 
+
 app.set('port', (process.env.PORT || 5000));
 
 app.use(express.static(__dirname + '/public'));
@@ -30,24 +31,47 @@ app.get('/times', function(request, response) {
 
 app.get('/db', function (request, response) {
   // https://node-postgres.com/guides/upgrading
-  var pool = new pg.Pool()
-
-  // connection using created pool
-  pool.connect(function(err, client, done) {
-    client.query('SELECT * FROM test_table', function(err, result) {
-      done();
-      if (err){
-        console.error(err); response.send("Error " + err);
-      }else {
-        response.render('pages/db', {results: result.rows} );
-      }
-    });
+  var pool = new pg.Pool({
+      connectionString: process.env.DATABASE_URL
   });
 
-  // pool shutdown
-  pool.end()
+  pool.connect((err, client, done) => {
+    if (err) throw err;
+    client.query('SELECT * FROM test_table', (err, res) => {
+      if (err) {
+        console.log(err.stack);
+      } else {
+        response.send(res);
+      }
+      done();
+    });
+  });
 });
 
+// app.get('/db', function (request, response) {
+//
+//   var client = new pg.Client(process.env.DATABASE_URL + "/test_table");
+//   pg.defaults.ssl = true;
+//   client.connect();
+//
+//   var query = client.query("SELECT * FROM test_table");
+//   console.log("xox----------------------", query);
+//   response.send(query);
+//   client.end();
+// });
+
+// app.get('/db', function (request, response) {
+//   pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+//     client.query('SELECT * FROM test_table', function(err, result) {
+//       done();
+//       if (err)
+//        { console.error(err); response.send("Error " + err); }
+//       else
+//        { response.send(result); }
+//     });
+//   });
+// });
+//
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
 });
