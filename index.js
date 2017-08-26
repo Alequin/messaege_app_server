@@ -20,6 +20,7 @@ app.get('/cool', function(request, response) {
 
 app.get('/times', function(request, response) {
     var result = ''
+    console.log("Debug: ", process.env.TIMES);
     var times = process.env.TIMES || 5
     for (i=0; i < times; i++)
       result += i + ' ';
