@@ -37,7 +37,7 @@ app.get('/db', function (request, response) {
 
   pool.connect((err, client, done) => {
     if (err) throw err;
-    client.query('SELECT * FROM test_table', (err, res) => {
+    client.query('SELECT * FROM another', (err, res) => {
       if (err) {
         console.log(err.stack);
       } else {
@@ -71,7 +71,7 @@ app.get('/db', function (request, response) {
 //     });
 //   });
 // });
-//
+
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
 });
