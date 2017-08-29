@@ -3,6 +3,9 @@ var express = require('express');
 var app = express();
 var pg = require('pg');
 
+var FCM = require('fcm-node')
+var serverKey = require('./fcmclient-d1e8a-firebase-adminsdk-00quu-015a8c3f2e') //put the generated private key path here
+var fcm = new FCM(serverKey)
 
 app.set('port', (process.env.PORT || 5000));
 
@@ -14,6 +17,25 @@ app.set('view engine', 'ejs');
 
 app.get('/', function(request, response) {
   response.render('pages/index')
+});
+
+app.get('/testMessage', function(request, response) {
+  var message = { //this may vary according to the message type (single recipient, multicast, topic, et cetera)
+    to: 'cDQhiF_mOJw:APA91bF9Tg-GmtjNPCNBjVfC08a6y5QCgJuc50RO12KEuj55x9HuqXvDV8CYCaLySi-1ZJCVW_ejBtiHyoG8Tq8wdXRUxR5YFyjB-tZ9P1hdhwvbkOMp-tAl93kkj2jMctNN3hOgYW4f',
+    notification: {
+        title: 'Title of your push notification',
+        body: 'Body of your push notification'
+    }
+  }
+
+  fcm.send(message, function(err, response){
+      if (err) {
+        response.send("Something has gone wrong!");
+      } else {
+        response.send("Successfully sent with response: " + response);
+      }
+  });
+
 });
 
 app.get('/cool', function(request, response) {
@@ -47,6 +69,8 @@ app.get('/db', function (request, response) {
     });
   });
 });
+
+
 
 // app.get('/db', function (request, response) {
 //
