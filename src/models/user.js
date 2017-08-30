@@ -32,20 +32,13 @@ User.prototype.save = function(){
   });
 }
 
-User.deleteAll = function(){
-
+User.findAll = function(){
   const command = "DELETE FROM " + User.tableName + ";"
+}
 
-  SQL.connect((client, done) => {
-    client.query(command, (err, res) => {
-      if (err) {
-        console.log(err.stack);
-      } else {
-        console.log("deleted all from " + User.tableName);
-      }
-      done();
-    });
-  });
+User.deleteAll = function(){
+  const command = `DELETE FROM ${User.tableName};`
+  SQL.runSimpleCommand(command, `Deleted all from ${User.tableName}`)
 }
 
 module.exports = User;

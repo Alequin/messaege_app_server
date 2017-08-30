@@ -31,17 +31,7 @@ Conversation.prototype.save = function(){
 
 Conversation.deleteAll = function(){
   const command = `DELETE FROM ${Conversation.tableName};`
-
-  SQL.connect((client, done) => {
-    client.query(command, (err, res) => {
-      if (err) {
-        console.log(err.stack);
-      } else {
-        console.log("deleted all from conversations");
-      }
-      done();
-    });
-  });
+  SQL.runSimpleCommand(command, `Deleted all from ${Conversation.tableName}`)
 }
 
 module.exports = Conversation;

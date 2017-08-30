@@ -17,4 +17,17 @@ SqlConnection.prototype.connect = function (onConnect) {
   });
 };
 
+SqlConnection.prototype.runSimpleCommand = function(command, logOutput){
+  this.connect((client, done) => {
+    client.query(command, (err, res) => {
+      if (err) {
+        console.log(err.stack);
+      } else {
+        if(logOutput)console.log(logOutput);
+      }
+      done();
+    });
+  });
+}
+
 module.exports = new SqlConnection();
