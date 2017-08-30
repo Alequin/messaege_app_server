@@ -8,9 +8,10 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon server.js",
-    "test": "node test.js",
-    "build-tables-local": "psql -d chat_app -f sql/tables.sql",
-    "build-tables": "cat sql/tables.sql | heroku pg:psql"
+    "test": "mocha src/specs",
+    "build-tables-local": "psql -d chat_app -f src/sql/tables.sql",
+    "build-tables": "cat src/sql/tables.sql | heroku pg:psql",
+    "seed": "node src/db/seeds.js"
   },
   "dependencies": {
     "pg": "6.x",
@@ -19,6 +20,7 @@
     "express": "4.15.2"
   },
   "devDependencies": {
+    "mocha": "^3.5.0",
     "request": "^2.81.0",
     "tape": "^4.7.0"
   },
