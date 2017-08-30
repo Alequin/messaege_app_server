@@ -10,9 +10,14 @@ function User(name, avatar, deviceSystem, deviceToken, onlineStatus, privacyStat
   this.privacyStatus = privacyStatus
 }
 
+User.tableName = "users";
+
 User.prototype.save = function(){
 
-  const command = "";
+  const command = `INSERT INTO ${User.tableName}
+  (name, avatar, device_system, device_token, online_status, privacy_status)
+  VALUES ('${this.name}',${this.avatar},'${this.deviceSystem}','${this.deviceToken}',
+  '${this.onlineStatus}',${this.privacyStatus}) RETURNING id;`
 
   SQL.connect((client, done) => {
     client.query(command, (err, res) => {
@@ -20,7 +25,7 @@ User.prototype.save = function(){
         console.log(err.stack);
       } else {
         this.id = res.rows[0].id
-        console.log("saved: ", res.rows);
+        console.log("saved user: ", res.rows);
       }
       done();
     });
@@ -28,7 +33,6 @@ User.prototype.save = function(){
 }
 
 User.deleteAll = function(){
-  const tableName = "users"
 
   const command = "DELETE FROM " + tableName + ";"
 
@@ -37,11 +41,11 @@ User.deleteAll = function(){
       if (err) {
         console.log(err.stack);
       } else {
-        console.log("deleted all from " + tableName);
+        console.log("deleted all from " + User.tableName);
       }
       done();
     });
   });
 }
 
-module.exports = Conversation;
+module.exports = User;
