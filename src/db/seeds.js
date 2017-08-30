@@ -11,20 +11,22 @@ let prepareTimeToWait = function(){
 }
 let timeToWait = prepareTimeToWait();
 
-
 User.deleteAll();
 Conversation.deleteAll();
 
-const convo1 = new Conversation("2017-01-01");
+const convos = [];
+
+convos.push(new Conversation("2017-01-01"));
 
 setTimeout(() => {
-  convo1.save();
+  for(let convo of convos) convo.save();
 }, timeToWait());
 
-const user1 = new User("cool Name", 5, "android", "sfhfee", "online", true);
+const users = [];
+users.push(new User("cool Name", 5, "android", "sfhfee", "online", true));
 
 setTimeout(() => {
-  user1.save();
+  for(let user of users) user.save();
 }, timeToWait());
 
 setTimeout(() => {
