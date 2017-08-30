@@ -3,6 +3,7 @@ const SQL = require("./../db/sql_connection");
 
 function User(name, avatar, deviceSystem, deviceToken, onlineStatus, privacyStatus){
   this.id = -1;
+  this.name = name;
   this.avatar = avatar;
   this.deviceSystem = deviceSystem
   this.deviceToken = deviceToken
@@ -32,7 +33,13 @@ User.prototype.save = function(){
 
 User.findAll = function(callBack){
   const command = `SELECT * FROM ${User.tableName};`
-
+  const onError = (error) =>{
+    console.log(error);
+  }
+  const onSuccess = (result) => {
+    console.log("Found all users: ", result.rows);
+  }
+  SQL.connect(command, onError, onSuccess);
 }
 
 User.deleteAll = function(){
