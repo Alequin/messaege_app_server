@@ -34,7 +34,7 @@ User.prototype.save = function(){
 
 User.deleteAll = function(){
 
-  const command = "DELETE FROM " + tableName + ";"
+  const command = "DELETE FROM " + User.tableName + ";"
 
   SQL.connect((client, done) => {
     client.query(command, (err, res) => {

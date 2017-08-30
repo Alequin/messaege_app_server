@@ -6,14 +6,15 @@ function Conversation(creationDate){
   this.creationDate = creationDate;
 }
 
+Conversation.tableName = "conversations";
+
 Conversation.prototype.save = function(){
 
   const creationDate = "'" + this.creationDate + "'"
 
-  const command =
-  "INSERT INTO conversations" +
-  "(creation_date) VALUES ("+ creationDate +")" +
-  "RETURNING id;"
+  const command =`INSERT INTO ${Conversation.tableName}
+  (creation_date) VALUES ('${this.creationDate}')
+  RETURNING id`;
 
   SQL.connect((client, done) => {
     client.query(command, (err, res) => {
@@ -29,7 +30,7 @@ Conversation.prototype.save = function(){
 }
 
 Conversation.deleteAll = function(){
-  const command = "DELETE FROM conversations;"
+  const command = `DELETE FROM ${Conversation.tableName};`
 
   SQL.connect((client, done) => {
     client.query(command, (err, res) => {

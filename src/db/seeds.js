@@ -1,6 +1,7 @@
 const Conversation = require("./../models/conversation");
 const User = require("./../models/user");
 
+User.deleteAll();
 Conversation.deleteAll();
 
 const convo1 = new Conversation("2017-01-01");
