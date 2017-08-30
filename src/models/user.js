@@ -19,21 +19,20 @@ User.prototype.save = function(){
   VALUES ('${this.name}',${this.avatar},'${this.deviceSystem}','${this.deviceToken}',
   '${this.onlineStatus}',${this.privacyStatus}) RETURNING id;`
 
-  SQL.connect((client, done) => {
-    client.query(command, (err, res) => {
-      if (err) {
-        console.log(err.stack);
-      } else {
-        this.id = res.rows[0].id
-        console.log("saved user: ", res.rows);
-      }
-      done();
-    });
-  });
+  const onError = (error) =>{
+    console.log(error);
+  }
+  const onSuccess = (result) => {
+    this.id = result.rows[0].id
+    console.log("saved user: ", result.rows);
+  }
+
+  SQL.connect(command, onError, onSuccess);
 }
 
-User.findAll = function(){
-  const command = "DELETE FROM " + User.tableName + ";"
+User.findAll = function(callBack){
+  const command = `SELECT * FROM ${User.tableName};`
+
 }
 
 User.deleteAll = function(){

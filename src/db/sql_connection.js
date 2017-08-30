@@ -5,7 +5,7 @@ function SqlConnection(){
   this.connectionString = "postgres://localhost/chat_app";
 }
 
-SqlConnection.prototype.connect = function (onConnect) {
+SqlConnection.prototype.connect = function (command, onFail, onSuccess) {
   // https://node-postgres.com/guides/upgrading
   var pool = new pg.Pool({
       connectionString: this.connectionString
@@ -13,7 +13,14 @@ SqlConnection.prototype.connect = function (onConnect) {
 
   pool.connect((err, client, done) => {
     if(err) throw err
-    onConnect(client, done);
+    client.query(command, (err, res) => {
+      if (err) {
+        onFail(err);
+      } else {
+        onSuccess(res);
+      }
+      done();
+    });
   });
 };
 

@@ -16,17 +16,15 @@ Conversation.prototype.save = function(){
   (creation_date) VALUES ('${this.creationDate}')
   RETURNING id`;
 
-  SQL.connect((client, done) => {
-    client.query(command, (err, res) => {
-      if (err) {
-        console.log(err.stack);
-      } else {
-        this.id = res.rows[0].id
-        console.log("saved: ", res.rows);
-      }
-      done();
-    });
-  });
+  const onError = (error) => {
+    console.log(error);
+  }
+  const onSuccess = (result) => {
+    this.id = result.rows[0].id
+    console.log("saved conversation: ", result.rows);
+  }
+
+  SQL.connect(command, onError, onSuccess);
 }
 
 Conversation.deleteAll = function(){
