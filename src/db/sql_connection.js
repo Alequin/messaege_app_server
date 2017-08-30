@@ -25,16 +25,9 @@ SqlConnection.prototype.connect = function (command, onFail, onSuccess) {
 };
 
 SqlConnection.prototype.runSimpleCommand = function(command, logOutput){
-  this.connect((client, done) => {
-    client.query(command, (err, res) => {
-      if (err) {
-        console.log(err.stack);
-      } else {
-        if(logOutput)console.log(logOutput);
-      }
-      done();
-    });
-  });
+  const onError = (err) => {console.log(err.stack)}
+  const onSuccess = (result) => {if(logOutput)console.log(logOutput);}
+  this.connect(command, onError, onSuccess);
 }
 
 module.exports = new SqlConnection();
