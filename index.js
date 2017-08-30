@@ -1,7 +1,7 @@
 var cool = require('cool-ascii-faces');
 var express = require('express');
 var app = express();
-var pg = require('pg');
+var sql = require("./src/db/sql_connection");
 
 var FCM = require('fcm-node')
 var serverKey = require('./fcmclient-d1e8a-firebase-adminsdk-00quu-015a8c3f2e') //put the generated private key path here
@@ -14,6 +14,20 @@ app.use(express.static(__dirname + '/public'));
 // views is directory for all template files
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
+
+// var checker = function(req, res, next)  {
+//   for(var header of req.header) {
+//     if(header.key.contains('username') === '') {
+//
+//     }
+//   }
+//
+//   next();
+// };
+//
+// app.get('/', checker , function(req, res) {
+//
+// })
 
 app.get('/', function(request, response) {
   response.render('pages/index')
@@ -43,23 +57,38 @@ app.get('/cool', function(request, response) {
 });
 
 app.get('/times', function(request, response) {
-    var result = ''
-    console.log("Debug: ", process.env.TIMES);
-    var times = process.env.TIMES || 5
-    for (i=0; i < times; i++)
-      result += i + ' ';
+  var result = ''
+  console.log("Debug: ", process.env.TIMES);
+  var times = process.env.TIMES || 5
+  for (i=0; i < times; i++)
+    result += i + ' ';
   response.send(result);
 });
 
-app.get('/db', function (request, response) {
-  // https://node-postgres.com/guides/upgrading
-  var pool = new pg.Pool({
-      connectionString: process.env.DATABASE_URL
-  });
+// app.get('/db', function (request, response) {
+//   // https://node-postgres.com/guides/upgrading
+//   var pool = new pg.Pool({
+//       connectionString: process.env.DATABASE_URL
+//   });
+//
+//   pool.connect((err, client, done) => {
+//     if (err) throw err;
+//     client.query('SELECT * FROM another', (err, res) => {
+//       if (err) {
+//         console.log(err.stack);
+//       } else {
+//         response.send(res);
+//       }
+//       done();
+//     });
+//   });
+// });
 
-  pool.connect((err, client, done) => {
+app.get('/db', function (request, response) {
+  console.log(process.env.DATABASE_URL);
+  sql.connect((err, client, done) => {
     if (err) throw err;
-    client.query('SELECT * FROM another', (err, res) => {
+    client.query('SELECT * FROM one;', (err, res) => {
       if (err) {
         console.log(err.stack);
       } else {
