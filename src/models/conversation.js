@@ -27,6 +27,17 @@ Conversation.prototype.save = function(){
   SQL.connect(command, onError, onSuccess);
 }
 
+Conversation.findAll = function(callBack){
+  const command = `SELECT * FROM ${Conversation.tableName};`
+  const onError = (error) =>{
+    console.log(error);
+  }
+  const onSuccess = (result) => {
+    console.log("Found all conversations: ", result.rows);
+  }
+  SQL.connect(command, onError, onSuccess);
+}
+
 Conversation.deleteAll = function(){
   const command = `DELETE FROM ${Conversation.tableName};`
   SQL.runSimpleCommand(command, `Deleted all from ${Conversation.tableName}`)
