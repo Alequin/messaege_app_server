@@ -11,7 +11,7 @@ function Message(id, body, userId, conversationId, sentTimestamp){
 Message.prototype.save = function(){
 
   SQL.connect((client, done) => {
-    client.query('INSERT INTO ', (err, res) => {
+    client.query('INSERT INTO messages', (err, res) => {
       if (err) {
         console.log(err.stack);
       } else {
