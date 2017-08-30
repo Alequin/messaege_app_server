@@ -10,9 +10,8 @@ app.get('/', function(request, response) {
 });
 
 app.get('/db', function (request, response) {
-  console.log(process.env.DATABASE_URL);
-  sql.connect((err, client, done) => {
-    if (err) throw err;
+
+  sql.connect((client, done) => {
     client.query('SELECT * FROM test;', (err, res) => {
       if (err) {
         console.log(err.stack);
@@ -22,6 +21,7 @@ app.get('/db', function (request, response) {
       done();
     });
   });
+
 });
 
 app.listen(app.get('port'), function() {

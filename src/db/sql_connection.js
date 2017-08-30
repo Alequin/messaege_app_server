@@ -1,5 +1,4 @@
 
-const fs = require('fs');
 const pg = require('pg');
 
 function SqlConnection(){
@@ -13,7 +12,8 @@ SqlConnection.prototype.connect = function (onConnect) {
   });
 
   pool.connect((err, client, done) => {
-    onConnect(err, client, done);
+    if(err) throw err
+    onConnect(client, done);
   });
 };
 
