@@ -9,7 +9,8 @@
   "scripts": {
     "start": "nodemon server.js",
     "test": "node test.js",
-    "seed": "cat sql/seed.sql | heroku pg:psql"
+    "build-tables-local": "psql -d chat_app -f sql/tables.sql",
+    "build-tables": "cat sql/tables.sql | heroku pg:psql"
   },
   "dependencies": {
     "pg": "6.x",
