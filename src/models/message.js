@@ -17,7 +17,7 @@ Message.prototype.save = function(){
     (message_body, user_id, conversation_id, sent_timestamp)
     VALUES ($1, $2, $3, $4)
     RETURNING id;`,
-    values: [this.body, this.user_id, this.conversation_id, this.sentTimestamp]
+    values: [this.body, this.userId, this.conversationId, this.sentTimestamp]
   }
 
   const onError = (error) => {
@@ -31,11 +31,6 @@ Message.prototype.save = function(){
   return SQL.connect(sql, onError, onSuccess);
 }
 
-Message.all = function(onError, onSuccess){
-  const sql = {command: `SELECT * FROM ${Message.tableName};`}
-  SQL.connect(sql, onError, onSuccess);
-}
-
 Message.map = function(options){
   const newMessage = new Message(
     options.message_body, options.user_id,
@@ -47,12 +42,22 @@ Message.map = function(options){
 
 Message.all = function(onError, onSuccess){
   const sql = {command: `SELECT * FROM ${Message.tableName};`}
+  Message.selectQuery(onError, onSuccess, sql);
+}
 
+Message.getAllFromConversation = function(convoId, onError, onSuccess){
+  const sql = {
+    command: `SELECT * FROM ${Message.tableName} WHERE conversation_id = $1;`,
+    values: [convoId]
+  }
+  Message.selectQuery(onError, onSuccess, sql);
+}
+
+Message.selectQuery = function(onError, onSuccess, sql){
   const preOnSuccess = (result) => {
     const messages = SQL.mapResults(result, Message.map)
     onSuccess(messages);
   }
-
   SQL.connect(sql, onError, preOnSuccess);
 }
 
