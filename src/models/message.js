@@ -4,6 +4,7 @@ const SQL = require("./../db/sql_connection");
 function Message(body, userId, conversationId, sentTimestamp){
   this.id = -1;
   this.body = body;
+  this.userId = userId;
   this.conversationId = conversationId;
   this.sentTimestamp = sentTimestamp;
 }

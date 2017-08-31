@@ -13,15 +13,17 @@ function buildMessages(array, convos){
   let event1 = new Promise((resolve, reject) => {
     Conversation.findUsersOf(convos[0].id, onError, (users) => {
 
-      var arr = [];
+      let promiseArray = [];
+      let tempArray = [];
 
-      array.push(new Message("hello", users[0].id, convos[0].id, "2017-08-31 14:00:00.123456+00"));
-      array.push(new Message("how are you?", users[1].id, convos[0].id, "2017-08-31 14:00:30.123456+00"));
-      array.push(new Message("im fine thanks", users[0].id, convos[0].id, "2017-08-31 14:01:00.123456+00"));
+      tempArray.push(new Message("hello", users[0].id, convos[0].id, "2017-08-31 14:00:00.123456+00"));
+      tempArray.push(new Message("how are you?", users[1].id, convos[0].id, "2017-08-31 14:00:30.123456+00"));
+      tempArray.push(new Message("im fine thanks", users[0].id, convos[0].id, "2017-08-31 14:01:00.123456+00"));
 
-      for(var message of array) arr.push(message.save());
+      for(var message of tempArray) promiseArray.push(message.save());
+      array = array.concat(tempArray);
 
-      Promise.all(arr).then(()=> {
+      Promise.all(promiseArray).then(()=> {
         resolve();
       });
     })
@@ -30,15 +32,18 @@ function buildMessages(array, convos){
   let event2 = new Promise((resolve, reject) => {
     Conversation.findUsersOf(convos[1].id, onError, (users) => {
 
-      var arr = [];
+      let promiseArray = [];
+      let tempArray = [];
 
-      array.push(new Message("bacon and eggs", users[0].id, convos[1].id, "2017-08-31 14:00:00.123456+00"));
-      array.push(new Message("yes i enjoy that", users[1].id, convos[1].id, "2017-08-31 14:00:30.123456+00"));
-      array.push(new Message("wow me two", users[0].id, convos[1].id, "2017-08-31 14:01:00.123456+00"));
-      array.push(new Message("And me three", users[2].id, convos[1].id, "2017-08-31 14:01:00.123456+00"));
-      for(var message of array) arr.push(message.save());
+      tempArray.push(new Message("bacon and eggs", users[0].id, convos[1].id, "2017-08-31 14:00:00.123456+00"));
+      tempArray.push(new Message("yes i enjoy that", users[1].id, convos[1].id, "2017-08-31 14:00:30.123456+00"));
+      tempArray.push(new Message("wow me two", users[0].id, convos[1].id, "2017-08-31 14:01:00.123456+00"));
+      tempArray.push(new Message("And me three", users[2].id, convos[1].id, "2017-08-31 14:01:30.123456+00"));
 
-      Promise.all(arr).then(()=> {
+      for(var message of tempArray) promiseArray.push(message.save());
+      array = array.concat(tempArray);
+
+      Promise.all(promiseArray).then(()=> {
         resolve();
       });
     })

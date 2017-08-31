@@ -15,9 +15,9 @@ const messages = [];
 
 let promise = Participant.deleteAll();
 
-promise = promise.then(() => {return User.deleteAll()});
-promise = promise.then(() => {return Conversation.deleteAll()});
 promise = promise.then(() => {return Message.deleteAll()});
+promise = promise.then(() => {return Conversation.deleteAll()});
+promise = promise.then(() => {return User.deleteAll()});
 promise = promise.then(() => {return buildConversations(convos)});
 promise = promise.then(() => {console.log('built convo ----------------------------------------')});
 promise = promise.then(() => {return buildUsers(users)});
