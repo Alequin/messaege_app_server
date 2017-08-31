@@ -21,4 +21,4 @@ setTimeout(() => {buildUsers(users);}, timeToWait());
 const participants = [];
 setTimeout(() => {buildParticipants(participants, users, convos);}, timeToWait());
 
-logTables();
+setTimeout(logTables, timeToWait());
