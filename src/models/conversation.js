@@ -37,12 +37,14 @@ Conversation.map = function(options){
 
 Conversation.all = function(onError, onSuccess){
   const sql = {command: `SELECT * FROM ${Conversation.tableName};`}
+  Conversation.selectQuery(onError, onSuccess, sql);
+}
 
+Conversation.selectQuery = function(onError, onSuccess, sql){
   const preOnSuccess = (result) => {
     const convos = SQL.mapResults(result, Conversation.map)
     onSuccess(convos);
   }
-
   SQL.connect(sql, onError, preOnSuccess);
 }
 

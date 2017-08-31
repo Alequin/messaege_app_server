@@ -11,4 +11,11 @@ convoRouter.get('/', requestAuth, function(req, res, next){
   });
 });
 
+convoRouter.get('/user/:id', requestAuth, function(req, res, next){
+  const onError = (error) => {console.log(error.stack)}
+  Convos.all(onError, (results) => {
+    res.json(results)
+  });
+});
+
 module.exports = convoRouter;
