@@ -27,14 +27,8 @@ Conversation.prototype.save = function(){
   SQL.connect(command, onError, onSuccess);
 }
 
-Conversation.findAll = function(callBack){
+Conversation.findAll = function(onError, onSuccess){
   const command = `SELECT * FROM ${Conversation.tableName};`
-  const onError = (error) =>{
-    console.log(error);
-  }
-  const onSuccess = (result) => {
-    console.log("Found all conversations: ", result.rows);
-  }
   SQL.connect(command, onError, onSuccess);
 }
 

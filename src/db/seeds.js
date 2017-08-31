@@ -30,6 +30,12 @@ setTimeout(() => {
 }, timeToWait());
 
 setTimeout(() => {
-  User.findAll();
-  Conversation.findAll();
+
+  const onError = (err) => {console.log("error")}
+
+  const onSuccessUsers = (results) => {console.log("Returned Users: ", results.rows)}
+  User.findAll(onError, onSuccessUsers);
+  const onSuccessConversation = (results) => {console.log("Returned conversations: ", results.rows)}
+  Conversation.findAll(onError, onSuccessConversation);
+
 }, timeToWait());

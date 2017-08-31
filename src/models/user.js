@@ -31,14 +31,8 @@ User.prototype.save = function(){
   SQL.connect(command, onError, onSuccess);
 }
 
-User.findAll = function(callBack){
+User.findAll = function(onError, onSuccess){
   const command = `SELECT * FROM ${User.tableName};`
-  const onError = (error) =>{
-    console.log(error);
-  }
-  const onSuccess = (result) => {
-    console.log("Found all users: ", result.rows);
-  }
   SQL.connect(command, onError, onSuccess);
 }
 
