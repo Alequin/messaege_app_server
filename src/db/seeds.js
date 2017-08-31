@@ -6,7 +6,7 @@ const Participant = require("./../models/Participant");
 const buildParticipants = require("./seed_helpers/participant_seeds");
 const logTables = require("./seed_helpers/table_logger");
 
-let timeToWait = require("./seed_helpers/wait_time_counter")();
+let timeToWait = require("./seed_helpers/wait_time_counter")(250);
 
 setTimeout(() => {Participant.deleteAll();}, timeToWait());
 setTimeout(() => {User.deleteAll();}, timeToWait());

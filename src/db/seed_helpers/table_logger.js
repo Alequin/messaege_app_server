@@ -3,7 +3,7 @@ const User = require("./../../models/user");
 const Participant = require("./../../models/Participant");
 
 const onError = (err) => {console.log("error")}
-let timeToWait = require("./wait_time_counter")();
+let timeToWait = require("./wait_time_counter")(250);
 
 module.exports = function(){
   setTimeout(() => {

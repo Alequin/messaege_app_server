@@ -1,8 +1,8 @@
-let prepareTimeToWait = function(){
-  let timeToWait = 250;
+let prepareTimeToWait = function(interval){
+  let timeToWait = interval;
   return function(){
     let toReturn = timeToWait;
-    timeToWait += 250;
+    timeToWait += interval;
     return timeToWait;
   }
 }
