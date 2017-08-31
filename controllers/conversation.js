@@ -13,7 +13,9 @@ convoRouter.get('/', requestAuth, function(req, res, next){
 
 convoRouter.get('/user/:id', requestAuth, function(req, res, next){
   const onError = (error) => {console.log(error.stack)}
-  Convos.all(onError, (results) => {
+  const userId = req.params.id;
+  Convos.getAllForUser(userId, onError, (results) => {
+    console.log("out", results);
     res.json(results)
   });
 });

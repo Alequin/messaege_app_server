@@ -40,6 +40,16 @@ Conversation.all = function(onError, onSuccess){
   Conversation.selectQuery(onError, onSuccess, sql);
 }
 
+Conversation.getAllForUser = function(userId, onError, onSuccess){
+  const sql = {
+    command: `SELECT conversations.* FROM ${Conversation.tableName} INNER JOIN participants
+              ON conversations.id = participants.conversation_id
+              WHERE user_id = $1;`,
+    values: [userId]
+    }
+  Conversation.selectQuery(onError, onSuccess, sql);
+}
+
 Conversation.selectQuery = function(onError, onSuccess, sql){
   const preOnSuccess = (result) => {
     const convos = SQL.mapResults(result, Conversation.map)
