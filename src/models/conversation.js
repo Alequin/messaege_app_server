@@ -12,9 +12,12 @@ Conversation.prototype.save = function(){
 
   const creationDate = "'" + this.creationDate + "'"
 
-  const command =`INSERT INTO ${Conversation.tableName}
-  (creation_date) VALUES ('${this.creationDate}')
-  RETURNING id`;
+  const sql = {
+    command: `INSERT INTO ${Conversation.tableName}
+    (creation_date) VALUES ($1)
+    RETURNING id;`,
+    values: [this.creationDate]
+  }
 
   const onError = (error) => {
     console.log(error);
@@ -24,17 +27,17 @@ Conversation.prototype.save = function(){
     console.log("saved conversation: ", result.rows);
   }
 
-  SQL.connect(command, onError, onSuccess);
+  SQL.connect(sql, onError, onSuccess);
 }
 
 Conversation.findAll = function(onError, onSuccess){
-  const command = `SELECT * FROM ${Conversation.tableName};`
-  SQL.connect(command, onError, onSuccess);
+  const sql = {command: `SELECT * FROM ${Conversation.tableName};`}
+  SQL.connect(sql, onError, onSuccess);
 }
 
 Conversation.deleteAll = function(){
-  const command = `DELETE FROM ${Conversation.tableName};`
-  SQL.runSimpleCommand(command, `Deleted all from ${Conversation.tableName}`)
+  const sql = {command: `DELETE FROM ${Conversation.tableName};`}
+  SQL.runSimpleCommand(sql, `Deleted all from ${Conversation.tableName}`)
 }
 
 module.exports = Conversation;

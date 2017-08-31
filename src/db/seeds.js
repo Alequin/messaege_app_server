@@ -14,23 +14,26 @@ let prepareTimeToWait = function(){
 }
 let timeToWait = prepareTimeToWait();
 
-User.deleteAll();
+// User.deleteAll();
 Conversation.deleteAll();
 
 const convos = [];
 setTimeout(() => {buildConversations(convos);}, timeToWait());
-
-const users = [];
-setTimeout(() => {buildUsers(users);}, timeToWait());
-
-setTimeout(() => {
-
-  const onError = (err) => {console.log("error")}
-
-  const onSuccessUsers = (results) => {console.log("Returned Users: ", results.rows)}
-  User.findAll(onError, onSuccessUsers);
-
-  const onSuccessConversation = (results) => {console.log("Returned conversations: ", results.rows)}
-  Conversation.findAll(onError, onSuccessConversation);
-
-}, timeToWait());
+//
+// const users = [];
+// setTimeout(() => {buildUsers(users);}, timeToWait());
+//
+// const participants = [];
+// setTimeout(() => {buildUsers(users);}, timeToWait());
+//
+// setTimeout(() => {
+//
+//   const onError = (err) => {console.log("error")}
+//
+//   const onSuccessConversation = (results) => {console.log("Returned conversations: ", results.rows)}
+//   Conversation.findAll(onError, onSuccessConversation);
+//
+//   const onSuccessUsers = (results) => {console.log("Returned Users: ", results.rows)}
+//   User.findAll(onError, onSuccessUsers);
+//
+// }, timeToWait());
