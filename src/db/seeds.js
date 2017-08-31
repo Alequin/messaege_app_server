@@ -8,9 +8,9 @@ const logTables = require("./seed_helpers/table_logger");
 
 let timeToWait = require("./seed_helpers/wait_time_counter")(250);
 
-setTimeout(() => {Participant.deleteAll();}, timeToWait());
-setTimeout(() => {User.deleteAll();}, timeToWait());
-setTimeout(() => {Conversation.deleteAll();}, timeToWait());
+var promise = Participant.deleteAll();
+promise = promise.then(() => {User.deleteAll()});
+promise = promise.then(() => {Conversation.deleteAll()});
 
 const convos = [];
 setTimeout(() => {buildConversations(convos);}, timeToWait());

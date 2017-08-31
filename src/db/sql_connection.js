@@ -11,8 +11,7 @@ SqlConnection.prototype.connect = function (sql, onFail, onSuccess) {
       connectionString: this.connectionString
   });
 
-  pool.connect((err, client, done) => {
-    if(err) throw err
+  return pool.connect().then((client) => {
     client.query(sql.command, sql.values, (err, res) => {
       if (err) {
         onFail(err);
@@ -21,13 +20,13 @@ SqlConnection.prototype.connect = function (sql, onFail, onSuccess) {
       }
       client.end();
     });
-  });
+  }).catch((error) => {if(err) throw err});
 };
 
 SqlConnection.prototype.runSimpleCommand = function(sql, logOutput){
   const onError = (err) => {console.log(err.stack)}
   const onSuccess = (result) => {if(logOutput)console.log(logOutput);}
-  this.connect(sql, onError, onSuccess);
+  return this.connect(sql, onError, onSuccess);
 }
 
 module.exports = new SqlConnection();

@@ -36,7 +36,7 @@ Participant.findAll = function(onError, onSuccess){
 
 Participant.deleteAll = function(){
   const sql = {command: `DELETE FROM ${Participant.tableName};`}
-  SQL.runSimpleCommand(sql, `Deleted all from ${Participant.tableName}`)
+  return SQL.runSimpleCommand(sql, `Deleted all from ${Participant.tableName}`)
 }
 
 module.exports = Participant;

@@ -43,7 +43,7 @@ User.findAll = function(onError, onSuccess){
 
 User.deleteAll = function(){
   const sql = {command: `DELETE FROM ${User.tableName};`}
-  SQL.runSimpleCommand(sql, `Deleted all from ${User.tableName}`)
+  return SQL.runSimpleCommand(sql, `Deleted all from ${User.tableName}`)
 }
 
 module.exports = User;
