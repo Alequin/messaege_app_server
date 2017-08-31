@@ -38,4 +38,12 @@ Conversation.deleteAll = function(){
   return SQL.runSimpleCommand(sql, `Deleted all from ${Conversation.tableName}`)
 }
 
+Conversation.findParticipantsOf = function(id, onError, onSuccess){
+  const sql = {
+    command: `SELECT * FROM participants WHERE conversation_id = $1`,
+    values: [id]
+  }
+  SQL.connect(sql, onError, onSuccess);
+}
+
 module.exports = Conversation;

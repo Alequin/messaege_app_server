@@ -1,6 +1,8 @@
 const Message = require("./../../models/message");
 
-function buildMessages(array){
+function buildMessages(array, users, convos){
+
+  
 
 }
 

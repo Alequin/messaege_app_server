@@ -26,4 +26,9 @@ setTimeout(() => {buildParticipants(participants, users, convos);}, timeToWait()
 const messages = [];
 setTimeout(() => {buildMessages(messages, users, convos);}, timeToWait());
 
-setTimeout(logTables, timeToWait());
+// setTimeout(logTables, timeToWait());
+
+const onError = () => {}
+const onSuccess = (results) => {console.log(results)}
+
+setTimeout(() => {Conversation.findParticipantsOf(convos[0].id, onError, onSuccess)}, timeToWait());
