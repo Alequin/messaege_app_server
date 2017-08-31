@@ -17,10 +17,13 @@ let promise = Participant.deleteAll();
 
 promise = promise.then(() => {return User.deleteAll()});
 promise = promise.then(() => {return Conversation.deleteAll()});
+promise = promise.then(() => {return Message.deleteAll()});
 promise = promise.then(() => {return buildConversations(convos)});
-promise = promise.then(() => {console.log('built convo')});
+promise = promise.then(() => {console.log('built convo ----------------------------------------')});
 promise = promise.then(() => {return buildUsers(users)});
-promise = promise.then(() => {console.log('built users')});
+promise = promise.then(() => {console.log('built users ----------------------------------------')});
 promise = promise.then(() => {return buildParticipants(participants, users, convos)});
+promise = promise.then(() => {console.log('built participant ----------------------------------------')});
 promise = promise.then(() => {return buildMessages(messages, convos)});
+promise = promise.then(() => {console.log('built messages ----------------------------------------')});
 promise = promise.then(logTables);
