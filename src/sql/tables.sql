@@ -10,7 +10,7 @@ CREATE TABLE users(
   device_system VARCHAR(40),
   device_token TEXT,
   online_status VARCHAR(20),
-  privacy_status BOOLEAN
+  is_visible BOOLEAN
 );
 
 CREATE TABLE conversations(

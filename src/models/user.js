@@ -1,14 +1,14 @@
 
 const SQL = require("./../db/sql_connection");
 
-function User(name, avatar, deviceSystem, deviceToken, onlineStatus, privacyStatus){
+function User(name, avatar, deviceSystem, deviceToken, onlineStatus, isVisible){
   this.id = -1;
   this.name = name;
   this.avatar = avatar;
   this.deviceSystem = deviceSystem
   this.deviceToken = deviceToken
   this.onlineStatus = onlineStatus
-  this.privacyStatus = privacyStatus
+  this.isVisible = isVisible
 }
 
 User.tableName = "users";
@@ -17,11 +17,11 @@ User.prototype.save = function(){
 
   const sql = {
     command: `INSERT INTO ${User.tableName}
-    (name, avatar, device_system, device_token, online_status, privacy_status)
+    (name, avatar, device_system, device_token, online_status, is_visible)
     VALUES ($1, $2, $3, $4, $5, $6) RETURNING id;`,
     values: [
       this.name, this.avatar, this.deviceSystem,
-      this.deviceToken, this.onlineStatus, this.privacyStatus
+      this.deviceToken, this.onlineStatus, this.isVisible
     ]
   }
 
@@ -39,7 +39,7 @@ User.prototype.save = function(){
 User.map = function(options){
   const newUser = new User(
     options.name, options.avatar, options.device_system,
-    options.device_token,options.online_status, options.privacy_status
+    options.device_token,options.online_status, options.is_visible
   );
   newUser.id = options.id;
   return newUser;
@@ -60,7 +60,7 @@ User.getOnline = function(onError, onSuccess){
 
 User.getVisiblyOnline = function(onError, onSuccess){
   const sql = {
-    command: `SELECT * FROM ${User.tableName} WHERE online_status = $1 AND privacy_status = $2;`,
+    command: `SELECT * FROM ${User.tableName} WHERE online_status = $1 AND is_visible = $2;`,
     values: ["online", true]
   }
   User.selectQuery(onError, onSuccess, sql)
