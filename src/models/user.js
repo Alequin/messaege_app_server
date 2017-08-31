@@ -45,7 +45,7 @@ User.map = function(options){
   return newUser;
 }
 
-User.findAll = function(onError, onSuccess){
+User.all = function(onError, onSuccess){
   const sql = {command: `SELECT * FROM ${User.tableName};`}
 
   const preOnSuccess = (result) => {

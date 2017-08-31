@@ -29,7 +29,7 @@ Conversation.prototype.save = function(){
   return SQL.connect(sql, onError, onSuccess);
 }
 
-Conversation.findAll = function(onError, onSuccess){
+Conversation.all = function(onError, onSuccess){
   const sql = {command: `SELECT * FROM ${Conversation.tableName};`}
   SQL.connect(sql, onError, onSuccess);
 }

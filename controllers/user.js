@@ -6,7 +6,7 @@ const User = require("./../src/models/user");
 
 userRouter.get('/', requestAuth, function(req, res, next){
   const onError = (error) => {console.log(error.stack)}
-  User.findAll(onError, (results) => {
+  User.all(onError, (results) => {
     res.json(results)
   });
 });

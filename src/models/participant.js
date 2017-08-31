@@ -35,7 +35,7 @@ Participant.map = function(options){
   return newParticipant;
 }
 
-Participant.findAll = function(onError, onSuccess){
+Participant.all = function(onError, onSuccess){
   const sql = {command: `SELECT * FROM ${Participant.tableName};`}
   SQL.connect(sql, onError, onSuccess);
 }

@@ -9,21 +9,21 @@ let timeToWait = require("./wait_time_counter")(250);
 module.exports = function(){
   setTimeout(() => {
     const onSuccessConversation = (results) => {console.log("Returned conversations: ", results.rows)}
-    Conversation.findAll(onError, onSuccessConversation);
+    Conversation.all(onError, onSuccessConversation);
   }, timeToWait());
 
   setTimeout(() => {
     const onSuccessUsers = (results) => {console.log("Returned Users: ", results.rows)}
-    User.findAll(onError, onSuccessUsers);
+    User.all(onError, onSuccessUsers);
   }, timeToWait());
 
   setTimeout(() => {
     const onSuccessParticipants = (results) => {console.log("Returned participants: ", results.rows)}
-    Participant.findAll(onError, onSuccessParticipants);
+    Participant.all(onError, onSuccessParticipants);
   }, timeToWait());
 
   setTimeout(() => {
     const onSuccessMessage = (results) => {console.log("Returned messages: ", results.rows)}
-    Message.findAll(onError, onSuccessMessage);
+    Message.all(onError, onSuccessMessage);
   }, timeToWait());
 }
