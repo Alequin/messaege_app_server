@@ -1,8 +1,8 @@
 
 const SQL = require("./../db/sql_connection");
 
-function Message(id, body, userId, conversationId, sentTimestamp){
-  this.id = id;
+function Message(body, userId, conversationId, sentTimestamp){
+  this.id = -1;
   this.body = body;
   this.conversationId = conversationId;
   this.sentTimestamp = sentTimestamp;
@@ -25,7 +25,7 @@ Message.prototype.save = function(){
   }
   const onSuccess = (result) => {
     this.id = result.rows[0].id
-    console.log("saved conversation: ", result.rows);
+    console.log("saved message: ", result.rows);
   }
 
   SQL.connect(sql, onError, onSuccess);
@@ -40,3 +40,5 @@ Message.deleteAll = function(){
   const sql = {command: `DELETE FROM ${Message.tableName};`}
   return SQL.runSimpleCommand(sql, `Deleted all from ${Message.tableName}`)
 }
+
+module.exports = Message;
