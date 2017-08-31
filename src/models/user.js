@@ -47,13 +47,7 @@ User.map = function(options){
 
 User.all = function(onError, onSuccess){
   const sql = {command: `SELECT * FROM ${User.tableName};`}
-
-  const preOnSuccess = (result) => {
-    const users = SQL.mapResults(result, User.map)
-    onSuccess(users);
-  }
-
-  SQL.connect(sql, onError, preOnSuccess);
+  User.selectQuery(onError, onSuccess, sql)
 }
 
 User.getOnline = function(onError, onSuccess){
@@ -61,12 +55,14 @@ User.getOnline = function(onError, onSuccess){
     command: `SELECT * FROM ${User.tableName} WHERE online_status = $1;`,
     values: ["online"]
   }
+  User.selectQuery(onError, onSuccess, sql)
+}
 
+User.selectQuery = function(onError, onSuccess, sql){
   const preOnSuccess = (result) => {
     const users = SQL.mapResults(result, User.map)
     onSuccess(users);
   }
-
   SQL.connect(sql, onError, preOnSuccess);
 }
 
