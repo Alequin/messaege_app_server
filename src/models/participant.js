@@ -4,16 +4,19 @@ const SQL = require("./../db/sql_connection");
 function Participant(userId, conversationId){
   this.id = -1;
   this.userId = userId;
-  this.participantId = participantId;
+  this.conversationId = conversationId;
 }
 
 Participant.tableName = "participants";
 
 Participant.prototype.save = function(){
 
-  const command = `INSERT INTO ${Participant.tableName}
-  (user_id, conversation_id)
-  VALUES (${this.userId},${this.participantId}) RETURNING id;`
+  const sql = {
+    command: `INSERT INTO ${Participant.tableName}
+    (user_id, conversation_id)
+    VALUES ($1, $2) RETURNING id;`,
+    values: [this.userId,this.conversationId]
+  }
 
   const onError = (error) =>{
     console.log(error);
@@ -23,17 +26,17 @@ Participant.prototype.save = function(){
     console.log("saved participant: ", result.rows);
   }
 
-  SQL.connect(command, onError, onSuccess);
+  SQL.connect(sql, onError, onSuccess);
 }
 
 Participant.findAll = function(onError, onSuccess){
-  const command = `SELECT * FROM ${Participant.tableName};`
-  SQL.connect(command, onError, onSuccess);
+  const sql = {command: `SELECT * FROM ${Participant.tableName};`}
+  SQL.connect(sql, onError, onSuccess);
 }
 
 Participant.deleteAll = function(){
-  const command = `DELETE FROM ${Participant.tableName};`
-  SQL.runSimpleCommand(command, `Deleted all from ${Participant.tableName}`)
+  const sql = {command: `DELETE FROM ${Participant.tableName};`}
+  SQL.runSimpleCommand(sql, `Deleted all from ${Participant.tableName}`)
 }
 
 module.exports = Participant;

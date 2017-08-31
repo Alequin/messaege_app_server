@@ -2,20 +2,15 @@ const Conversation = require("./../models/conversation");
 const buildConversations = require("./seed_helpers/conversation_seeds");
 const User = require("./../models/user");
 const buildUsers = require("./seed_helpers/user_seeds");
+const Participant = require("./../models/Participant");
+const buildParticipants = require("./seed_helpers/participant_seeds");
+const logTables = require("./seed_helpers/table_logger");
 
+let timeToWait = require("./seed_helpers/wait_time_counter")();
 
-let prepareTimeToWait = function(){
-  let timeToWait = 250;
-  return function(){
-    let toReturn = timeToWait;
-    timeToWait += 250;
-    return timeToWait;
-  }
-}
-let timeToWait = prepareTimeToWait();
-
-User.deleteAll();
-Conversation.deleteAll();
+setTimeout(() => {Participant.deleteAll();}, timeToWait());
+setTimeout(() => {User.deleteAll();}, timeToWait());
+setTimeout(() => {Conversation.deleteAll();}, timeToWait());
 
 const convos = [];
 setTimeout(() => {buildConversations(convos);}, timeToWait());
@@ -23,17 +18,7 @@ setTimeout(() => {buildConversations(convos);}, timeToWait());
 const users = [];
 setTimeout(() => {buildUsers(users);}, timeToWait());
 
-// const participants = [];
-// setTimeout(() => {buildUsers(users);}, timeToWait());
-//
-// setTimeout(() => {
-//
-//   const onError = (err) => {console.log("error")}
-//
-//   const onSuccessConversation = (results) => {console.log("Returned conversations: ", results.rows)}
-//   Conversation.findAll(onError, onSuccessConversation);
-//
-//   const onSuccessUsers = (results) => {console.log("Returned Users: ", results.rows)}
-//   User.findAll(onError, onSuccessUsers);
-//
-// }, timeToWait());
+const participants = [];
+setTimeout(() => {buildParticipants(participants, users, convos);}, timeToWait());
+
+logTables();
