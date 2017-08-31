@@ -2,7 +2,7 @@ const Participant = require("./../../models/participant");
 
 function buildParticipants(array, users){
 
-  array.push();
+  array.push(new Participant());
 
 }
 
