@@ -11,10 +11,6 @@ SqlConnection.prototype.connect = function (sql, onFail, onSuccess) {
       connectionString: this.connectionString
   });
 
-  if(!sql.values) {
-    sql.values = [];
-  }
-
   pool.connect((err, client, done) => {
     if(err) throw err
     client.query(sql.command, sql.values, (err, res) => {
