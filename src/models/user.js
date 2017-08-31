@@ -56,6 +56,20 @@ User.all = function(onError, onSuccess){
   SQL.connect(sql, onError, preOnSuccess);
 }
 
+User.getOnline = function(onError, onSuccess){
+  const sql = {
+    command: `SELECT * FROM ${User.tableName} WHERE online_status = $1;`
+    values: ["online"]
+  }
+
+  const preOnSuccess = (result) => {
+    const users = SQL.mapResults(result, User.map)
+    onSuccess(users);
+  }
+
+  SQL.connect(sql, onError, preOnSuccess);
+}
+
 User.deleteAll = function(){
   const sql = {command: `DELETE FROM ${User.tableName};`}
   return SQL.runSimpleCommand(sql, `Deleted all from ${User.tableName}`)
