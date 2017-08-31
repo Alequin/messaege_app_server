@@ -6,7 +6,6 @@ function buildUsers(array){
   array.push(new User("wow fan", 5, "android", "sfhfee", "online", true));
 
   let arr = [];
-
   for(let user of array) arr.push(user.save());
 
   return Promise.all(arr);

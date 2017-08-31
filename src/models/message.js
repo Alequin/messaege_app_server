@@ -28,7 +28,7 @@ Message.prototype.save = function(){
     console.log("saved message: ", result.rows);
   }
 
-  SQL.connect(sql, onError, onSuccess);
+  return SQL.connect(sql, onError, onSuccess);
 }
 
 Message.all = function(onError, onSuccess){

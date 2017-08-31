@@ -12,7 +12,6 @@ function buildMessages(array, convos){
 
   return new Promise((resolve, reject) => {
     Conversation.findUsersOf(convoId, onError, (users) => {
-      console.log(users);
 
       var arr = [];
 
