@@ -8,14 +8,12 @@ const Message = require("./../models/message");
 const buildMessages = require("./seed_helpers/message_seeds");
 const logTables = require("./seed_helpers/table_logger");
 
-let timeToWait = require("./seed_helpers/wait_time_counter")(250);
-
-let promise = Participant.deleteAll();
-
 const convos = [];
 const users = [];
 const participants = [];
 const messages = [];
+
+let promise = Participant.deleteAll();
 
 promise = promise.then(() => {return User.deleteAll()});
 promise = promise.then(() => {return Conversation.deleteAll()});
