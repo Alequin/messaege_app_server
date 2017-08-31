@@ -1,6 +1,6 @@
 
 const SQL = require("./../db/sql_connection");
-const Participant = require("./participant");
+const User = require("./user");
 
 function Conversation(creationDate){
   this.id = -1;
@@ -39,19 +39,20 @@ Conversation.deleteAll = function(){
   return SQL.runSimpleCommand(sql, `Deleted all from ${Conversation.tableName}`)
 }
 
-Conversation.findParticipantsOf = function(id, onError, onSuccess){
+Conversation.findUsersOf = function(id, onError, onSuccess){
   const sql = {
-    command: `SELECT * FROM participants WHERE conversation_id = $1`,
+    command: `SELECT users.* FROM participants INNER JOIN users ON
+    participants.user_id = users.id WHERE participants.conversation_id = $1;`,
     values: [id]
   }
 
   const preOnSuccess = (result) => {
     const table = result.rows;
-    const participants = [];
+    const users = [];
     for(let row of table){
-      participants.push(Participant.map(row));
+      users.push(User.map(row));
     }
-    onSuccess(participants);
+    onSuccess(users);
   }
 
   SQL.connect(sql, onError, preOnSuccess);

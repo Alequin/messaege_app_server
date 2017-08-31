@@ -36,6 +36,15 @@ User.prototype.save = function(){
   SQL.connect(sql, onError, onSuccess);
 }
 
+User.map = function(options){
+  const newUser = new User(
+    options.name, options.avatar, options.device_system,
+    options.device_token,options.online_status, options.privacy_status
+  );
+  newUser.id = options.id;
+  return newUser;
+}
+
 User.findAll = function(onError, onSuccess){
   const sql = {command: `SELECT * FROM ${User.tableName};`}
   SQL.connect(sql, onError, onSuccess);
