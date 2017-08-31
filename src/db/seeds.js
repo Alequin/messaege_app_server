@@ -24,8 +24,6 @@ const participants = [];
 setTimeout(() => {buildParticipants(participants, users, convos);}, timeToWait());
 
 const messages = [];
-setTimeout(() => {buildMessages(messages, users, convos);}, timeToWait());
+setTimeout(() => {buildMessages(messages, convos);}, timeToWait());
 
-// setTimeout(logTables, timeToWait());
-
-setTimeout(() => {Conversation.findUsersOf(convos[0].id, null, (results) => {console.log(results)});}, timeToWait());
+setTimeout(logTables, timeToWait());
