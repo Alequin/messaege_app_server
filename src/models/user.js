@@ -49,11 +49,7 @@ User.all = function(onError, onSuccess){
   const sql = {command: `SELECT * FROM ${User.tableName};`}
 
   const preOnSuccess = (result) => {
-    const table = result.rows;
-    const users = [];
-    for(let row of table){
-      users.push(User.map(row));
-    }
+    const users = SQL.mapResults(User.map)
     onSuccess(users);
   }
 

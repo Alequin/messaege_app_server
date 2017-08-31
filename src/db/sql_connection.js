@@ -29,4 +29,13 @@ SqlConnection.prototype.runSimpleCommand = function(sql, logOutput){
   return this.connect(sql, onError, onSuccess);
 }
 
+SqlConnection.prototype.mapResults = function(results, mapCallBack){
+  const table = results.rows;
+  const output = [];
+  for(let row of table){
+    output.push(mapCallBack(row));
+  }
+  return output;
+}
+
 module.exports = new SqlConnection();
