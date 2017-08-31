@@ -5,6 +5,10 @@ function buildParticipants(array, users, conversations){
   array.push(new Participant(users[0].id, conversations[0].id));
   array.push(new Participant(users[1].id, conversations[0].id));
 
+  array.push(new Participant(users[1].id, conversations[1].id));
+  array.push(new Participant(users[2].id, conversations[1].id));
+  array.push(new Participant(users[3].id, conversations[1].id));
+
   let arr = [];
   for(let participant of array) arr.push(participant.save());
 
