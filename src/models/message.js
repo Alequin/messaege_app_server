@@ -36,6 +36,26 @@ Message.all = function(onError, onSuccess){
   SQL.connect(sql, onError, onSuccess);
 }
 
+Message.map = function(options){
+  const newMessage = new Message(
+    options.message_body, options.user_id,
+    options.conversation_id, options.sent_timestamp
+  );
+  newMessage.id = options.id;
+  return newMessage;
+}
+
+Message.all = function(onError, onSuccess){
+  const sql = {command: `SELECT * FROM ${Message.tableName};`}
+
+  const preOnSuccess = (result) => {
+    const messages = SQL.mapResults(result, Message.map)
+    onSuccess(messages);
+  }
+
+  SQL.connect(sql, onError, preOnSuccess);
+}
+
 Message.deleteAll = function(){
   const sql = {command: `DELETE FROM ${Message.tableName};`}
   return SQL.runSimpleCommand(sql, `Deleted all from ${Message.tableName}`)

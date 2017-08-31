@@ -29,9 +29,21 @@ Conversation.prototype.save = function(){
   return SQL.connect(sql, onError, onSuccess);
 }
 
+Conversation.map = function(options){
+  const newConvo = new Conversation(options.creation_date);
+  newConvo.id = options.id;
+  return newConvo;
+}
+
 Conversation.all = function(onError, onSuccess){
   const sql = {command: `SELECT * FROM ${Conversation.tableName};`}
-  SQL.connect(sql, onError, onSuccess);
+
+  const preOnSuccess = (result) => {
+    const convos = SQL.mapResults(result, Conversation.map)
+    onSuccess(convos);
+  }
+
+  SQL.connect(sql, onError, preOnSuccess);
 }
 
 Conversation.deleteAll = function(){

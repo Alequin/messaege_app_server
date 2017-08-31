@@ -49,7 +49,7 @@ User.all = function(onError, onSuccess){
   const sql = {command: `SELECT * FROM ${User.tableName};`}
 
   const preOnSuccess = (result) => {
-    const users = SQL.mapResults(User.map)
+    const users = SQL.mapResults(result, User.map)
     onSuccess(users);
   }
 

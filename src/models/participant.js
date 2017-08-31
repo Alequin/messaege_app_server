@@ -40,6 +40,17 @@ Participant.all = function(onError, onSuccess){
   SQL.connect(sql, onError, onSuccess);
 }
 
+Participant.all = function(onError, onSuccess){
+  const sql = {command: `SELECT * FROM ${Participant.tableName};`}
+
+  const preOnSuccess = (result) => {
+    const participants = SQL.mapResults(result, Participant.map)
+    onSuccess(participants);
+  }
+
+  SQL.connect(sql, onError, preOnSuccess);
+}
+
 Participant.deleteAll = function(){
   const sql = {command: `DELETE FROM ${Participant.tableName};`}
   return SQL.runSimpleCommand(sql, `Deleted all from ${Participant.tableName}`)
