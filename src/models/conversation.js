@@ -35,7 +35,7 @@ Conversation.findAll = function(onError, onSuccess){
 
 Conversation.deleteAll = function(){
   const sql = {command: `DELETE FROM ${Conversation.tableName};`}
-  SQL.runSimpleCommand(sql, `Deleted all from ${Conversation.tableName}`)
+  return SQL.runSimpleCommand(sql, `Deleted all from ${Conversation.tableName}`)
 }
 
 module.exports = Conversation;

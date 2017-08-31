@@ -4,6 +4,8 @@ const User = require("./../models/user");
 const buildUsers = require("./seed_helpers/user_seeds");
 const Participant = require("./../models/Participant");
 const buildParticipants = require("./seed_helpers/participant_seeds");
+const Message = require("./../models/message");
+const buildMessages = require("./seed_helpers/message_seeds");
 const logTables = require("./seed_helpers/table_logger");
 
 let timeToWait = require("./seed_helpers/wait_time_counter")(250);
@@ -20,5 +22,8 @@ setTimeout(() => {buildUsers(users);}, timeToWait());
 
 const participants = [];
 setTimeout(() => {buildParticipants(participants, users, convos);}, timeToWait());
+
+const messages = [];
+setTimeout(() => {buildMessages(messages, users, convos);}, timeToWait());
 
 setTimeout(logTables, timeToWait());

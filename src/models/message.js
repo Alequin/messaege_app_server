@@ -1,5 +1,5 @@
 
-const SQL = require("./src/db/sql_connection");
+const SQL = require("./../db/sql_connection");
 
 function Message(id, body, userId, conversationId, sentTimestamp){
   this.id = id;
@@ -7,6 +7,8 @@ function Message(id, body, userId, conversationId, sentTimestamp){
   this.conversationId = conversationId;
   this.sentTimestamp = sentTimestamp;
 }
+
+Message.tableName = "messages"
 
 Message.prototype.save = function(){
 
@@ -27,4 +29,14 @@ Message.prototype.save = function(){
   }
 
   SQL.connect(sql, onError, onSuccess);
+}
+
+Message.findAll = function(onError, onSuccess){
+  const sql = {command: `SELECT * FROM ${Message.tableName};`}
+  SQL.connect(sql, onError, onSuccess);
+}
+
+Message.deleteAll = function(){
+  const sql = {command: `DELETE FROM ${Message.tableName};`}
+  return SQL.runSimpleCommand(sql, `Deleted all from ${Message.tableName}`)
 }
