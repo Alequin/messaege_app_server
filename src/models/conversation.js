@@ -26,7 +26,7 @@ Conversation.prototype.save = function(){
     console.log("saved conversation: ", result.rows);
   }
 
-  SQL.connect(sql, onError, onSuccess);
+  return SQL.connect(sql, onError, onSuccess);
 }
 
 Conversation.findAll = function(onError, onSuccess){

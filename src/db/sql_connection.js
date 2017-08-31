@@ -13,7 +13,7 @@ SqlConnection.prototype.connect = function (sql, onFail, onSuccess) {
 
   return pool.connect().then((client) => {
     console.log("client query");
-    client.query(sql.command, sql.values, (err, res) => {
+    return client.query(sql.command, sql.values, (err, res) => {
       console.log("query result");
       if (err) {
         onFail(err);

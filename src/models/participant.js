@@ -26,7 +26,7 @@ Participant.prototype.save = function(){
     console.log("saved participant: ", result.rows);
   }
 
-  SQL.connect(sql, onError, onSuccess);
+  return SQL.connect(sql, onError, onSuccess);
 }
 
 Participant.map = function(options){

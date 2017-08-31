@@ -10,20 +10,19 @@ const logTables = require("./seed_helpers/table_logger");
 
 let timeToWait = require("./seed_helpers/wait_time_counter")(250);
 
-var promise = Participant.deleteAll();
-promise = promise.then(() => {User.deleteAll()});
-promise = promise.then(() => {Conversation.deleteAll()});
+let promise = Participant.deleteAll();
 
 const convos = [];
-setTimeout(() => {buildConversations(convos);}, timeToWait());
-
 const users = [];
-setTimeout(() => {buildUsers(users);}, timeToWait());
-
 const participants = [];
-setTimeout(() => {buildParticipants(participants, users, convos);}, timeToWait());
-
 const messages = [];
-setTimeout(() => {buildMessages(messages, convos);}, timeToWait());
 
-setTimeout(logTables, timeToWait());
+promise = promise.then(() => {return User.deleteAll()});
+promise = promise.then(() => {return Conversation.deleteAll()});
+promise = promise.then(() => {return buildConversations(convos)});
+promise = promise.then(() => {console.log('built convo')});
+promise = promise.then(() => {return buildUsers(users)});
+promise = promise.then(() => {console.log('built users')});
+promise = promise.then(() => {return buildParticipants(participants, users, convos)});
+promise = promise.then(() => {return buildMessages(messages, convos)});
+promise = promise.then(logTables);

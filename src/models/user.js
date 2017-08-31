@@ -33,7 +33,7 @@ User.prototype.save = function(){
     console.log("saved user: ", result.rows);
   }
 
-  SQL.connect(sql, onError, onSuccess);
+  return SQL.connect(sql, onError, onSuccess);
 }
 
 User.map = function(options){
