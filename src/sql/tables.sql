@@ -26,7 +26,7 @@ CREATE TABLE participants(
 
 CREATE TABLE messages(
   id SERIAL8 PRIMARY KEY,
-  message TEXT,
+  message_body TEXT,
   user_id INT8 REFERENCES users(id),
   conversation_id INT8 REFERENCES conversations(id),
   sent_timestamp TIMESTAMP WITH TIME ZONE

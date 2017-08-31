@@ -10,8 +10,6 @@ Conversation.tableName = "conversations";
 
 Conversation.prototype.save = function(){
 
-  const creationDate = "'" + this.creationDate + "'"
-
   const sql = {
     command: `INSERT INTO ${Conversation.tableName}
     (creation_date) VALUES ($1)
