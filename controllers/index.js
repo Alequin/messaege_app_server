@@ -1,8 +1,10 @@
-var express = require('express');
-var router = new express.Router();
-var path = require("path");
+const express = require('express');
+const router = new express.Router();
+const requestAuth = require("./../src/services/request_auth");
 
-router.get('/', function(req, res){
+router.use("/users", require("./user.js"));
+
+router.get('/', requestAuth, function(req, res, next){
   res.send("Home route");
 });
 
