@@ -11,4 +11,11 @@ userRouter.get('/', requestAuth, function(req, res, next){
   });
 });
 
+userRouter.get('/online', requestAuth, function(req, res, next){
+  const onError = (error) => {console.log(error.stack)}
+  User.getOnline(onError, (results) => {
+    res.json(results)
+  });
+});
+
 module.exports = userRouter;

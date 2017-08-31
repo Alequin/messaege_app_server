@@ -58,7 +58,7 @@ User.all = function(onError, onSuccess){
 
 User.getOnline = function(onError, onSuccess){
   const sql = {
-    command: `SELECT * FROM ${User.tableName} WHERE online_status = $1;`
+    command: `SELECT * FROM ${User.tableName} WHERE online_status = $1;`,
     values: ["online"]
   }
 
