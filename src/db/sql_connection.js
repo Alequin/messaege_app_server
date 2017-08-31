@@ -19,7 +19,7 @@ SqlConnection.prototype.connect = function (command, onFail, onSuccess) {
       } else {
         onSuccess(res);
       }
-      done();
+      client.end();
     });
   });
 };
