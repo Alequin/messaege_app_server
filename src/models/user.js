@@ -47,7 +47,17 @@ User.map = function(options){
 
 User.findAll = function(onError, onSuccess){
   const sql = {command: `SELECT * FROM ${User.tableName};`}
-  SQL.connect(sql, onError, onSuccess);
+
+  const preOnSuccess = (result) => {
+    const table = result.rows;
+    const users = [];
+    for(let row of table){
+      users.push(User.map(row));
+    }
+    onSuccess(users);
+  }
+
+  SQL.connect(sql, onError, preOnSuccess);
 }
 
 User.deleteAll = function(){
