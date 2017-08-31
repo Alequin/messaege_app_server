@@ -48,7 +48,9 @@ Message.all = function(onError, onSuccess){
 
 Message.getAllFromConversation = function(convoId, onError, onSuccess){
   const sql = {
-    command: `SELECT * FROM ${Message.tableName} WHERE conversation_id = $1;`,
+    command: `SELECT * FROM ${Message.tableName}
+    WHERE conversation_id = $1
+    ORDER BY sent_timestamp;`,
     values: [convoId]
   }
   Message.selectQuery(onError, onSuccess, sql);
