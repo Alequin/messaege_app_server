@@ -15,10 +15,15 @@ User.tableName = "users";
 
 User.prototype.save = function(){
 
-  const command = `INSERT INTO ${User.tableName}
-  (name, avatar, device_system, device_token, online_status, privacy_status)
-  VALUES ('${this.name}',${this.avatar},'${this.deviceSystem}','${this.deviceToken}',
-  '${this.onlineStatus}',${this.privacyStatus}) RETURNING id;`
+  const sql = {
+    command: `INSERT INTO ${User.tableName}
+    (name, avatar, device_system, device_token, online_status, privacy_status)
+    VALUES ($1, $2, $3, $4, $5, $6) RETURNING id;`,
+    values: [
+      this.name, this.avatar, this.deviceSystem,
+      this.deviceToken, this.onlineStatus, this.privacyStatus
+    ]
+  }
 
   const onError = (error) =>{
     console.log(error);
@@ -28,17 +33,17 @@ User.prototype.save = function(){
     console.log("saved user: ", result.rows);
   }
 
-  SQL.connect(command, onError, onSuccess);
+  SQL.connect(sql, onError, onSuccess);
 }
 
 User.findAll = function(onError, onSuccess){
-  const command = `SELECT * FROM ${User.tableName};`
-  SQL.connect(command, onError, onSuccess);
+  const sql = {command: `SELECT * FROM ${User.tableName};`}
+  SQL.connect(sql, onError, onSuccess);
 }
 
 User.deleteAll = function(){
-  const command = `DELETE FROM ${User.tableName};`
-  SQL.runSimpleCommand(command, `Deleted all from ${User.tableName}`)
+  const sql = {command: `DELETE FROM ${User.tableName};`}
+  SQL.runSimpleCommand(sql, `Deleted all from ${User.tableName}`)
 }
 
 module.exports = User;

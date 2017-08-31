@@ -14,15 +14,15 @@ let prepareTimeToWait = function(){
 }
 let timeToWait = prepareTimeToWait();
 
-// User.deleteAll();
+User.deleteAll();
 Conversation.deleteAll();
 
 const convos = [];
 setTimeout(() => {buildConversations(convos);}, timeToWait());
-//
-// const users = [];
-// setTimeout(() => {buildUsers(users);}, timeToWait());
-//
+
+const users = [];
+setTimeout(() => {buildUsers(users);}, timeToWait());
+
 // const participants = [];
 // setTimeout(() => {buildUsers(users);}, timeToWait());
 //
