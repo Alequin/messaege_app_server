@@ -1,5 +1,6 @@
 
 const SQL = require("./../db/sql_connection");
+const Participant = require("./participant");
 
 function Conversation(creationDate){
   this.id = -1;
@@ -43,7 +44,17 @@ Conversation.findParticipantsOf = function(id, onError, onSuccess){
     command: `SELECT * FROM participants WHERE conversation_id = $1`,
     values: [id]
   }
-  SQL.connect(sql, onError, onSuccess);
+
+  const preOnSuccess = (result) => {
+    const table = result.rows;
+    const participants = [];
+    for(let row of table){
+      participants.push(Participant.map(row));
+    }
+    onSuccess(participants);
+  }
+
+  SQL.connect(sql, onError, preOnSuccess);
 }
 
 module.exports = Conversation;

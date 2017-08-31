@@ -29,6 +29,12 @@ Participant.prototype.save = function(){
   SQL.connect(sql, onError, onSuccess);
 }
 
+Participant.map = function(options){
+  const newParticipant = new Participant(options.user_id, options.conversation_id);
+  newParticipant.id = options.id;
+  return newParticipant;
+}
+
 Participant.findAll = function(onError, onSuccess){
   const sql = {command: `SELECT * FROM ${Participant.tableName};`}
   SQL.connect(sql, onError, onSuccess);
