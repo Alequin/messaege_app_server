@@ -13,9 +13,10 @@ messageRouter.get('/', requestAuth, function(req, res){
 
 messageRouter.post('/', requestAuth, function(req, res){
   const message = Message.map(req.body.message);
-  message.save();
-  res.json({
-    result: "success"
+  message.save().then(() => {
+    res.json({
+      result: message
+    });
   });
 });
 
