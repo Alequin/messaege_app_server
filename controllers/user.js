@@ -5,15 +5,15 @@ const requestAuth = require("./../src/services/request_auth");
 const User = require("./../src/models/user");
 const onError = (error) => {console.log(error.stack)}
 
-userRouter.get('/', requestAuth, function(req, res, next){
+userRouter.get('/', requestAuth, function(req, res){
   User.all(onError, (results) => {
     res.json(results)
   });
 });
 
-userRouter.post('/', requestAuth, function(req, res, next){
+userRouter.post('/', requestAuth, function(req, res){
   const userHash = req.body.user;
-  res.json(req.body);
+  res.json(req.headers['content-type']);
   // const newUser = new User(
   //   userHash.name, userHash.avatar,
   //   userHash.deviceSystem, userHash.deviceToken,
@@ -27,7 +27,7 @@ userRouter.post('/', requestAuth, function(req, res, next){
   // });
 });
 
-userRouter.get('/online', requestAuth, function(req, res, next){
+userRouter.get('/online', requestAuth, function(req, res){
   User.getVisiblyOnline(onError, (results) => {
     res.json(results)
   });
