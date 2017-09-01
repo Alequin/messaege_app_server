@@ -11,10 +11,12 @@ userRouter.get('/', requestAuth, function(req, res){
   });
 });
 
-userRouter.post('/', requestAuth, function(req, res){
+userRouter.post('/', function(req, res){
   const userHash = req.body.user;
   res.json({
-    out: req.get("Content-Type")
+    result: "here it is",
+    type: req.get("Content-Type"),
+    body: req.body
   });
   // const newUser = new User(
   //   userHash.name, userHash.avatar,

@@ -2,6 +2,7 @@
 const pg = require('pg');
 
 function SqlConnection(){
+  // this.connectionString = "postgres://localhost/chat_app";
   this.connectionString = process.env.DATABASE_URL;
 }
 

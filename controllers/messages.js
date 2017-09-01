@@ -9,7 +9,7 @@ const Notification = require("./../src/services/notification");
 
 const onError = (error) => {console.log(error.stack)}
 
-messageRouter.get('/', requestAuth, function(req, res){
+messageRouter.get('/', function(req, res){
   Message.all(onError, (results) => {
     res.json(results);
   });

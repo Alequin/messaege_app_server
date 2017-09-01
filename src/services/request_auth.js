@@ -4,7 +4,6 @@ const requestAuth = function (req, res, next) {
     next();
   } else {
     res.status(401);
-    res.send(process.env.AUTH_TITLE + " | " + process.env.AUTH_KEY);
   }
 }
 
