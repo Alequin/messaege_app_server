@@ -5,13 +5,13 @@ const requestAuth = require("./../src/services/request_auth");
 const User = require("./../src/models/user");
 const onError = (error) => {console.log(error.stack)}
 
-userRouter.get('/', requestAuth, function(req, res){
+userRouter.get('/', requestAuth, function(req, res, next){
   User.all(onError, (results) => {
     res.json(results)
   });
 });
 
-userRouter.post('/', requestAuth, function(req, res){
+userRouter.post('/', requestAuth, function(req, res, next){
   const userHash = req.body.user;
   res.json({
     result: "here it is",
