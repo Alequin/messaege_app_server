@@ -7,15 +7,15 @@ const onError = (error) => {console.log(error.stack)}
 
 userRouter.get('/', requestAuth, function(req, res){
   User.all(onError, (results) => {
-    res.json({
-      out: results
-    })
+    res.json(results)
   });
 });
 
 userRouter.post('/', requestAuth, function(req, res){
   const userHash = req.body.user;
-  res.json(req.get("Content-Type"));
+  res.json({
+    out: req.get("Content-Type")
+  });
   // const newUser = new User(
   //   userHash.name, userHash.avatar,
   //   userHash.deviceSystem, userHash.deviceToken,
