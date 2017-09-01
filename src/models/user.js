@@ -1,5 +1,6 @@
 
 const SQL = require("./../db/sql_connection");
+const TABLES = require("./../db/tables");
 
 function User(name, avatar, deviceSystem, deviceToken, onlineStatus, isVisible){
   this.id = -1;
@@ -11,12 +12,10 @@ function User(name, avatar, deviceSystem, deviceToken, onlineStatus, isVisible){
   this.isVisible = isVisible
 }
 
-User.tableName = "users";
-
 User.prototype.save = function(){
 
   const sql = {
-    command: `INSERT INTO ${User.tableName}
+    command: `INSERT INTO ${TABLES.users}
     (name, avatar, device_system, device_token, online_status, is_visible)
     VALUES ($1, $2, $3, $4, $5, $6) RETURNING id;`,
     values: [
@@ -46,13 +45,13 @@ User.map = function(options){
 }
 
 User.all = function(onError, onSuccess){
-  const sql = {command: `SELECT * FROM ${User.tableName};`}
+  const sql = {command: `SELECT * FROM ${TABLES.users};`}
   User.selectQuery(onError, onSuccess, sql)
 }
 
 User.getOnline = function(onError, onSuccess){
   const sql = {
-    command: `SELECT * FROM ${User.tableName} WHERE online_status = $1;`,
+    command: `SELECT * FROM ${TABLES.users} WHERE online_status = $1;`,
     values: ["online"]
   }
   User.selectQuery(onError, onSuccess, sql)
@@ -60,7 +59,7 @@ User.getOnline = function(onError, onSuccess){
 
 User.getVisiblyOnline = function(onError, onSuccess){
   const sql = {
-    command: `SELECT * FROM ${User.tableName} WHERE online_status = $1 AND is_visible = $2;`,
+    command: `SELECT * FROM ${TABLES.users} WHERE online_status = $1 AND is_visible = $2;`,
     values: ["online", true]
   }
   User.selectQuery(onError, onSuccess, sql)
@@ -75,8 +74,8 @@ User.selectQuery = function(onError, onSuccess, sql){
 }
 
 User.deleteAll = function(){
-  const sql = {command: `DELETE FROM ${User.tableName};`}
-  return SQL.runSimpleCommand(sql, `Deleted all from ${User.tableName}`)
+  const sql = {command: `DELETE FROM ${TABLES.users};`}
+  return SQL.runSimpleCommand(sql, `Deleted all from ${TABLES.users}`)
 }
 
 module.exports = User;

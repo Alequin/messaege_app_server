@@ -11,7 +11,7 @@ function Participant(userId, conversationId){
 Participant.prototype.save = function(){
 
   const sql = {
-    command: `INSERT INTO ${TABLES.participant}
+    command: `INSERT INTO ${TABLES.participants}
     (user_id, conversation_id)
     VALUES ($1, $2) RETURNING id;`,
     values: [this.userId,this.conversationId]
@@ -35,12 +35,12 @@ Participant.map = function(options){
 }
 
 Participant.all = function(onError, onSuccess){
-  const sql = {command: `SELECT * FROM ${TABLES.participant};`}
+  const sql = {command: `SELECT * FROM ${TABLES.participants};`}
   SQL.connect(sql, onError, onSuccess);
 }
 
 Participant.all = function(onError, onSuccess){
-  const sql = {command: `SELECT * FROM ${TABLES.participant};`}
+  const sql = {command: `SELECT * FROM ${TABLES.participants};`}
 
   const preOnSuccess = (result) => {
     const participants = SQL.mapResults(result, Participant.map)
@@ -51,8 +51,8 @@ Participant.all = function(onError, onSuccess){
 }
 
 Participant.deleteAll = function(){
-  const sql = {command: `DELETE FROM ${TABLES.participant};`}
-  return SQL.runSimpleCommand(sql, `Deleted all from ${TABLES.participant}`)
+  const sql = {command: `DELETE FROM ${TABLES.participants};`}
+  return SQL.runSimpleCommand(sql, `Deleted all from ${TABLES.participants}`)
 }
 
 module.exports = Participant;
