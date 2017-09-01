@@ -13,7 +13,7 @@ userRouter.get('/', requestAuth, function(req, res, next){
 
 userRouter.post('/', requestAuth, function(req, res, next){
   const userHash = req.body.user;
-  res.json(req.body);
+  res.json(req.body.user);
   // const newUser = new User(
   //   userHash.name, userHash.avatar,
   //   userHash.deviceSystem, userHash.deviceToken,
