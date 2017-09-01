@@ -36,7 +36,7 @@ Message.map = function(options){
     options.message_body, options.user_id,
     options.conversation_id, options.sent_timestamp
   );
-  newMessage.id = options.id;
+  if(options.id) newMessage.id = options.id;
   return newMessage;
 }
 
