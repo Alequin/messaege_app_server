@@ -1,5 +1,6 @@
 
 const SQL = require("./../db/sql_connection");
+const TABLES = require("./../db/tables");
 
 function Message(body, userId, conversationId, sentTimestamp){
   this.id = -1;
@@ -9,12 +10,10 @@ function Message(body, userId, conversationId, sentTimestamp){
   this.sentTimestamp = sentTimestamp;
 }
 
-Message.tableName = "messages"
-
 Message.prototype.save = function(){
 
   const sql = {
-    command: `INSERT INTO ${Message.tableName}
+    command: `INSERT INTO ${TABLES.messages}
     (message_body, user_id, conversation_id, sent_timestamp)
     VALUES ($1, $2, $3, $4)
     RETURNING id;`,
@@ -37,18 +36,18 @@ Message.map = function(options){
     options.message_body, options.user_id,
     options.conversation_id, options.sent_timestamp
   );
-  newMessage.id = options.id;
+  if(options.id) newMessage.id = options.id;
   return newMessage;
 }
 
 Message.all = function(onError, onSuccess){
-  const sql = {command: `SELECT * FROM ${Message.tableName};`}
+  const sql = {command: `SELECT * FROM ${TABLES.messages};`}
   Message.selectQuery(onError, onSuccess, sql);
 }
 
 Message.getAllFromConversation = function(convoId, onError, onSuccess){
   const sql = {
-    command: `SELECT * FROM ${Message.tableName}
+    command: `SELECT * FROM ${TABLES.messages}
     WHERE conversation_id = $1
     ORDER BY sent_timestamp;`,
     values: [convoId]
@@ -65,8 +64,8 @@ Message.selectQuery = function(onError, onSuccess, sql){
 }
 
 Message.deleteAll = function(){
-  const sql = {command: `DELETE FROM ${Message.tableName};`}
-  return SQL.runSimpleCommand(sql, `Deleted all from ${Message.tableName}`)
+  const sql = {command: `DELETE FROM ${TABLES.messages};`}
+  return SQL.runSimpleCommand(sql, `Deleted all from ${TABLES.messages}`)
 }
 
 module.exports = Message;

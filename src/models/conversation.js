@@ -1,18 +1,17 @@
 
 const SQL = require("./../db/sql_connection");
 const User = require("./user");
+const TABLES = require("./../db/tables");
 
 function Conversation(creationDate){
   this.id = -1;
   this.creationDate = creationDate;
 }
 
-Conversation.tableName = "conversations";
-
 Conversation.prototype.save = function(){
 
   const sql = {
-    command: `INSERT INTO ${Conversation.tableName}
+    command: `INSERT INTO ${TABLES.conversations}
     (creation_date) VALUES ($1)
     RETURNING id;`,
     values: [this.creationDate]
@@ -36,13 +35,13 @@ Conversation.map = function(options){
 }
 
 Conversation.all = function(onError, onSuccess){
-  const sql = {command: `SELECT * FROM ${Conversation.tableName};`}
+  const sql = {command: `SELECT * FROM ${TABLES.conversations};`}
   Conversation.selectQuery(onError, onSuccess, sql);
 }
 
 Conversation.getAllForUser = function(userId, onError, onSuccess){
   const sql = {
-    command: `SELECT conversations.* FROM ${Conversation.tableName} INNER JOIN participants
+    command: `SELECT conversations.* FROM ${TABLES.conversations} INNER JOIN participants
               ON conversations.id = participants.conversation_id
               WHERE user_id = $1;`,
     values: [userId]
@@ -59,14 +58,14 @@ Conversation.selectQuery = function(onError, onSuccess, sql){
 }
 
 Conversation.deleteAll = function(){
-  const sql = {command: `DELETE FROM ${Conversation.tableName};`}
-  return SQL.runSimpleCommand(sql, `Deleted all from ${Conversation.tableName}`)
+  const sql = {command: `DELETE FROM ${TABLES.conversations};`}
+  return SQL.runSimpleCommand(sql, `Deleted all from ${TABLES.conversations}`)
 }
 
 Conversation.findUsersOf = function(id, onError, onSuccess){
   const sql = {
-    command: `SELECT users.* FROM participants INNER JOIN users ON
-    participants.user_id = users.id WHERE participants.conversation_id = $1;`,
+    command: `SELECT ${TABLES.users}.* FROM ${TABLES.participants} INNER JOIN ${TABLES.users} ON
+    ${TABLES.participants}.user_id = users.id WHERE ${TABLES.participants}.conversation_id = $1;`,
     values: [id]
   }
 
@@ -79,7 +78,7 @@ Conversation.findUsersOf = function(id, onError, onSuccess){
     onSuccess(users);
   }
 
-  SQL.connect(sql, onError, preOnSuccess);
+  return SQL.connect(sql, onError, preOnSuccess);
 }
 
 module.exports = Conversation;

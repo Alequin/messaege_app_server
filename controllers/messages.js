@@ -2,19 +2,42 @@ const express = require('express');
 const messageRouter = new express.Router();
 const requestAuth = require("./../src/services/request_auth");
 
-const Messages = require("./../src/models/message");
+const Message = require("./../src/models/message");
+const Conversation = require("./../src/models/conversation");
 
-messageRouter.get('/', requestAuth, function(req, res, next){
-  const onError = (error) => {console.log(error.stack)}
-  Messages.all(onError, (results) => {
+const onError = (error) => {console.log(error.stack)}
+
+messageRouter.get('/', requestAuth, function(req, res){
+  Message.all(onError, (results) => {
     res.json(results);
   });
 });
 
-messageRouter.get('/conversation/:id', requestAuth, function(req, res, next){
+messageRouter.post('/', requestAuth, function(req, res){
+  const messageHash = req.body.message
+  const message = new Message(
+    messageHash.messageBody,
+    messageHash.userId,
+    messageHash.conversationId,
+    messageHash.sentTimestamp
+  );
+  message.save().then(() => {
+    return Conversation.findUsersOf(message.conversationId, onError, (users) => {
+      for(var user of users){
+        console.log(user)
+      }
+    });
+  }).then(() => {
+    res.json({
+      result: message
+    });
+  });
+});
+
+messageRouter.get('/conversation/:id', requestAuth, function(req, res){
   const onError = (error) => {console.log(error.stack)}
   const convoId = req.params.id;
-  Messages.getAllFromConversation(convoId, onError, (results) => {
+  Message.getAllFromConversation(convoId, onError, (results) => {
     res.json(results);
   });
 });
