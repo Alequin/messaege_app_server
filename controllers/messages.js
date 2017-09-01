@@ -4,6 +4,8 @@ const requestAuth = require("./../src/services/request_auth");
 
 const Message = require("./../src/models/message");
 const Conversation = require("./../src/models/conversation");
+const User = require("./../src/models/user");
+const Notification = require("./../src/services/notification");
 
 const onError = (error) => {console.log(error.stack)}
 
@@ -21,10 +23,20 @@ messageRouter.post('/', requestAuth, function(req, res){
     messageHash.conversationId,
     messageHash.sentTimestamp
   );
-  message.save().then(() => {
+  let sendingUser;
+
+  User.getById(message.userId, onError, (user) => {
+    sendingUser = user;
+  }).then(
+    message.save();
+  ).then(() => {
     return Conversation.findUsersOf(message.conversationId, onError, (users) => {
+      let title = "Message";
+      let body = "You have a message from " + sendingUser.name;
+      let notes = [];
       for(var user of users){
-        console.log(user)
+        let note = new Notification(user.deviceToken, title, body)
+        note.send();
       }
     });
   }).then(() => {

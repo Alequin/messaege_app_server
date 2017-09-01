@@ -49,6 +49,14 @@ User.all = function(onError, onSuccess){
   User.selectQuery(onError, onSuccess, sql)
 }
 
+User.getById = function(id, onError, onSuccess){
+  const sql = {
+    command: `SELECT * FROM ${TABLES.users} WHERE id = $1;`,
+    values: [id]
+  }
+  return User.selectQuery(onError, onSuccess, sql)
+}
+
 User.getOnline = function(onError, onSuccess){
   const sql = {
     command: `SELECT * FROM ${TABLES.users} WHERE online_status = $1;`,
@@ -70,7 +78,7 @@ User.selectQuery = function(onError, onSuccess, sql){
     const users = SQL.mapResults(result, User.map)
     onSuccess(users);
   }
-  SQL.connect(sql, onError, preOnSuccess);
+  return SQL.connect(sql, onError, preOnSuccess);
 }
 
 User.deleteAll = function(){
