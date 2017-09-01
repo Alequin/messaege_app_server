@@ -12,7 +12,13 @@ messageRouter.get('/', requestAuth, function(req, res){
 });
 
 messageRouter.post('/', requestAuth, function(req, res){
-  const message = Message.map(req.body.message);
+  const messageHash = req.body.message
+  const message = new Message(
+    messageHash.messageBody,
+    messageHash.userId,
+    messageHash.conversationId,
+    messageHash.sentTimestamp
+  );
   message.save().then(() => {
     res.json({
       result: message
