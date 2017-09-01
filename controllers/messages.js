@@ -27,17 +27,17 @@ messageRouter.post('/', requestAuth, function(req, res){
 
   User.getById(message.userId, onError, (user) => {
     sendingUser = user;
-  }).then(
-    message.save();
-  ).then(() => {
+  }).then(() => {
+    return message.save();
+  }).then(() => {
     return Conversation.findUsersOf(message.conversationId, onError, (users) => {
       let title = "Message";
       let body = "You have a message from " + sendingUser.name;
       let notes = [];
       for(var user of users){
         if(user.id !== sendingUser.id){
-          let note = new Notification(user.deviceToken, title, body)
-          note.send();
+          // let note = new Notification(user.deviceToken, title, body)
+          // note.send();
         }
       }
     });
