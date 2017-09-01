@@ -7,7 +7,9 @@ const onError = (error) => {console.log(error.stack)}
 
 userRouter.get('/', requestAuth, function(req, res){
   User.all(onError, (results) => {
-    res.json(results)
+    res.json({
+      out: results
+    })
   });
 });
 
