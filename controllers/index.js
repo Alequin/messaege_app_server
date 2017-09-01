@@ -10,4 +10,8 @@ router.get('/', requestAuth, function(req, res, next){
   res.send("Home route");
 });
 
+router.post('/test', requestAuth, function(req, res, next){
+  res.json(req.body);
+});
+
 module.exports = router;
