@@ -35,8 +35,10 @@ messageRouter.post('/', requestAuth, function(req, res){
       let body = "You have a message from " + sendingUser.name;
       let notes = [];
       for(var user of users){
-        let note = new Notification(user.deviceToken, title, body)
-        note.send();
+        if(user.id !== sendingUser.id){
+          let note = new Notification(user.deviceToken, title, body)
+          note.send();
+        }
       }
     });
   }).then(() => {
