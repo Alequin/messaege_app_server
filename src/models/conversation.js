@@ -78,7 +78,7 @@ Conversation.findUsersOf = function(id, onError, onSuccess){
     onSuccess(users);
   }
 
-  SQL.connect(sql, onError, preOnSuccess);
+  return SQL.connect(sql, onError, preOnSuccess);
 }
 
 module.exports = Conversation;
