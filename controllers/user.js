@@ -13,17 +13,18 @@ userRouter.get('/', requestAuth, function(req, res, next){
 
 userRouter.post('/', requestAuth, function(req, res, next){
   const userHash = req.body.user;
-  const newUser = new User(
-    userHash.name, userHash.avatar,
-    userHash.deviceSystem, userHash.deviceToken,
-    userHash.onlineStatus, userHash.isVisible
-  );
-
-  newUser.save().then(() => {
-    User.all(onError, (results) => {
-      res.json(newUser);
-    });
-  });
+  res.json(req.body);
+  // const newUser = new User(
+  //   userHash.name, userHash.avatar,
+  //   userHash.deviceSystem, userHash.deviceToken,
+  //   userHash.onlineStatus, userHash.isVisible
+  // );
+  //
+  // newUser.save().then(() => {
+  //   User.all(onError, (results) => {
+  //     res.json(newUser);
+  //   });
+  // });
 });
 
 userRouter.get('/online', requestAuth, function(req, res, next){
