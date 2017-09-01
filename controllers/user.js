@@ -11,7 +11,7 @@ userRouter.get('/', requestAuth, function(req, res){
   });
 });
 
-userRouter.post('/', function(req, res){
+userRouter.post('/', requestAuth, function(req, res){
   const userHash = req.body.user;
   res.json({
     result: "here it is",

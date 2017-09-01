@@ -9,13 +9,13 @@ const Notification = require("./../src/services/notification");
 
 const onError = (error) => {console.log(error.stack)}
 
-messageRouter.get('/', function(req, res){
+messageRouter.get('/', requestAuth, function(req, res, next){
   Message.all(onError, (results) => {
     res.json(results);
   });
 });
 
-messageRouter.post('/', requestAuth, function(req, res){
+messageRouter.post('/', requestAuth, function(req, res, next){
   const messageHash = req.body.message
   const message = new Message(
     messageHash.messageBody,
