@@ -19,11 +19,16 @@ userRouter.post('/', requestAuth, function(req, res, next){
     userHash.onlineStatus, userHash.isVisible
   );
 
-  newUser.save().then(() => {
-    User.all(onError, (results) => {
+  User.isUserNameTaken(newUser.name, onError, (results) => {
+    if(results.length > 0){
+      newUser.id = -1;
       res.json(newUser);
-    });
-  });
+    }else{
+      newUser.save().then(() => {
+        res.json(newUser);
+      });
+    }
+  })
 });
 
 userRouter.get('/online', requestAuth, function(req, res){

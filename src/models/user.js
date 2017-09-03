@@ -73,6 +73,14 @@ User.getVisiblyOnline = function(onError, onSuccess){
   User.selectQuery(onError, onSuccess, sql)
 }
 
+User.isUserNameTaken = function(nameToCheck, onError, onSuccess){
+  const sql = {
+    command: `SELECT * FROM ${TABLES.users} WHERE name = $1;`,
+    values: [nameToCheck]
+  }
+  return User.selectQuery(onError, onSuccess, sql)
+}
+
 User.selectQuery = function(onError, onSuccess, sql){
   const preOnSuccess = (result) => {
     const users = SQL.mapResults(result, User.map)
