@@ -87,7 +87,7 @@ ConversationInfo.getAllConversationInfoForUser = function(userId, onError, onSuc
     const gatheredUsersIds = {};
     const gatheredUsersNames = {};
     for(let content of contents.rows){
-      if(contents.user_id !== userId){
+      if(content.user_id !== userId){
         if(!gatheredUsersNames[content.id]){
           gatheredUsersIds[content.id] = [];
           gatheredUsersNames[content.id] = [];
@@ -102,12 +102,11 @@ ConversationInfo.getAllConversationInfoForUser = function(userId, onError, onSuc
 
     const convoInfoCollection = [];
     for(let gatheredUsersKey of Object.keys(gatheredUsersNames)){
-      if(gatheredUsersIds[gatheredUsersKey].includes(userId)){
-        convoId = gatheredUsersKey;
-        convoUsers = gatheredUsersNames[gatheredUsersKey];
-        convoInfoCollection.push(new ConversationInfo(convoId, convoUsers));
-      }
+      convoId = gatheredUsersKey;
+      convoUsers = gatheredUsersNames[gatheredUsersKey];
+      convoInfoCollection.push(new ConversationInfo(convoId, convoUsers));
     }
+    console.log(convoInfoCollection);
     onSuccess(convoInfoCollection);
   }
 
