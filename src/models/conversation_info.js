@@ -40,6 +40,8 @@ ConversationInfo.getAllInfoAllConversation = function(onError, onSuccess){
 
 ConversationInfo.getAllInfoAllConversation = function(onError, onSuccess){
 
+  //TODO - REFACTOR
+  
   const sql = {
     command:
       `SELECT ${TABLES.conversations}.id, ${TABLES.users}.name FROM
@@ -69,6 +71,8 @@ ConversationInfo.getAllInfoAllConversation = function(onError, onSuccess){
 }
 
 ConversationInfo.getAllConversationInfoForUser = function(userId, onError, onSuccess){
+
+  //TODO - REFACTOR
 
   const sql = {
     command:
