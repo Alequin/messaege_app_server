@@ -87,7 +87,7 @@ ConversationInfo.getAllConversationInfoForUser = function(userId, onError, onSuc
     const gatheredUsersIds = {};
     const gatheredUsersNames = {};
     for(let content of contents.rows){
-      if(content.user_id !== userId){
+      if(contents.user_id !== userId){
         if(!gatheredUsersNames[content.id]){
           gatheredUsersIds[content.id] = [];
           gatheredUsersNames[content.id] = [];
