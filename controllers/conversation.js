@@ -2,29 +2,32 @@ const express = require('express');
 const convoRouter = new express.Router();
 const requestAuth = require("./../src/services/request_auth");
 
-const Convos = require("./../src/models/conversation");
+const Convo = require("./../src/models/conversation");
 const ConvoInfo = require("./../src/models/conversation_info");
 
+const onError = (error) => {console.log(error.stack)}
+
 convoRouter.get('/', requestAuth, function(req, res, next){
-  const onError = (error) => {console.log(error.stack)}
-  Convos.all(onError, (results) => {
+  Convo.all(onError, (results) => {
     res.json(results)
   });
 });
 
 convoRouter.get('/user/:id', requestAuth, function(req, res, next){
-  const onError = (error) => {console.log(error.stack)}
   const userId = req.params.id;
-  Convos.getAllForUser(userId, onError, (results) => {
+  Convo.getAllForUser(userId, onError, (results) => {
     res.json(results)
   });
 });
 
 convoRouter.get("/participants/user/:id", requestAuth, function(req, res, next){
-  const onError = (error) => {console.log(error.stack)}
   ConvoInfo.getAllConversationInfoForUser(req.params.id, onError, (results) => {
     res.json(results);
   });
 });
+
+convoRouter.post("user/:id/other_user/:id", requestAuth, function(req, res, next){
+  const convo = new Conversation()
+})
 
 module.exports = convoRouter;
