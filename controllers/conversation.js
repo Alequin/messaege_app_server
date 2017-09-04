@@ -20,10 +20,10 @@ convoRouter.get('/user/:id', requestAuth, function(req, res, next){
   });
 });
 
-convoRouter.get("/participants", requestAuth, function(req, res, next){
+convoRouter.get("/participants/user/:id", requestAuth, function(req, res, next){
   const onError = (error) => {console.log(error.stack)}
-  ConvoInfo.getAllInfoAllConversation(onError, (results) => {
-    res.json(results)
+  ConvoInfo.getAllConversationInfoForUser(req.params.id, onError, (results) => {
+    res.json(results);
   });
 });
 
