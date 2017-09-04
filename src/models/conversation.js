@@ -46,7 +46,7 @@ Conversation.getAllForUser = function(userId, onError, onSuccess){
               WHERE user_id = $1;`,
     values: [userId]
     }
-  Conversation.selectQuery(onError, onSuccess, sql);
+  return Conversation.selectQuery(onError, onSuccess, sql);
 }
 
 Conversation.selectQuery = function(onError, onSuccess, sql){

@@ -3,6 +3,7 @@ const convoRouter = new express.Router();
 const requestAuth = require("./../src/services/request_auth");
 
 const Convos = require("./../src/models/conversation");
+const ConvoInfo = require("./../src/models/conversation_info");
 
 convoRouter.get('/', requestAuth, function(req, res, next){
   const onError = (error) => {console.log(error.stack)}
@@ -15,6 +16,13 @@ convoRouter.get('/user/:id', requestAuth, function(req, res, next){
   const onError = (error) => {console.log(error.stack)}
   const userId = req.params.id;
   Convos.getAllForUser(userId, onError, (results) => {
+    res.json(results)
+  });
+});
+
+convoRouter.get("/participants", requestAuth, function(req, res, next){
+  const onError = (error) => {console.log(error.stack)}
+  ConvoInfo.getAllInfoAllConversation(onError, (results) => {
     res.json(results)
   });
 });
