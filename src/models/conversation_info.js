@@ -41,7 +41,7 @@ ConversationInfo.getAllInfoAllConversation = function(onError, onSuccess){
 ConversationInfo.getAllInfoAllConversation = function(onError, onSuccess){
 
   //TODO - REFACTOR
-  
+
   const sql = {
     command:
       `SELECT ${TABLES.conversations}.id, ${TABLES.users}.name FROM
@@ -87,12 +87,14 @@ ConversationInfo.getAllConversationInfoForUser = function(userId, onError, onSuc
     const gatheredUsersIds = {};
     const gatheredUsersNames = {};
     for(let content of contents.rows){
-      if(!gatheredUsersNames[content.id]){
-        gatheredUsersIds[content.id] = [];
-        gatheredUsersNames[content.id] = [];
+      if(content.user_id !== userId){
+        if(!gatheredUsersNames[content.id]){
+          gatheredUsersIds[content.id] = [];
+          gatheredUsersNames[content.id] = [];
+        }
+        gatheredUsersIds[content.id].push(content.user_id);
+        gatheredUsersNames[content.id].push(content.name);
       }
-      gatheredUsersIds[content.id].push(content.user_id);
-      gatheredUsersNames[content.id].push(content.name);
     }
 
     console.log(gatheredUsersIds);
