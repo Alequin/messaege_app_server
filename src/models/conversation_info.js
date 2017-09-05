@@ -79,7 +79,11 @@ ConversationInfo.getAllConversationInfoForUser = function(userId, onError, onSuc
       `SELECT ${TABLES.conversations}.id, ${TABLES.users}.id AS user_id, ${TABLES.users}.name FROM
       ${TABLES.conversations} INNER JOIN ${TABLES.participants}
       ON ${TABLES.conversations}.id = ${TABLES.participants}.conversation_id
-      INNER JOIN ${TABLES.users} ON participants.user_id = ${TABLES.users}.id;`
+      INNER JOIN ${TABLES.users} ON participants.user_id = ${TABLES.users}.id
+      WHERE ${TABLES.conversations}.id IN (
+        SELECT conversation_id FROM ${TABLES.participants} WHERE user_id = $1
+      );`,
+    values: [userId]
   }
 
   const preOnSuccess = (contents) => {
