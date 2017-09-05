@@ -41,8 +41,8 @@ messageRouter.post('/', requestAuth, function(req, res, next){
       let notes = [];
       for(var user of users){
         if(user.id !== sendingUser.id){
-          // let note = new Notification(user.deviceToken, title, body)
-          // note.send();
+          let note = new Notification(user.deviceToken, title, body)
+          note.send();
         }
       }
     });
