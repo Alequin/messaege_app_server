@@ -7,7 +7,7 @@ const MessageInfo = require("./../src/models/message_info");
 const Conversation = require("./../src/models/conversation");
 const User = require("./../src/models/user");
 const Notification = require("./../src/services/notification");
-const requestAuth = require("./../src/services/date_time_handler");
+const DateTimeHandler = require("./../src/services/date_time_handler");
 
 const onError = (error) => {console.log(error.stack)}
 
