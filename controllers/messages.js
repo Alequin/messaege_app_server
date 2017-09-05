@@ -20,7 +20,7 @@ messageRouter.get('/', requestAuth, function(req, res, next){
 messageRouter.post('/', requestAuth, function(req, res, next){
   const messageHash = req.body.message
 
-  const timeStamp = DateTimeHandler.getDateTimeString(Date.now());
+  const timeStamp = DateTimeHandler.getDateTimeString(new Date());
 
   const message = new Message(
     messageHash.messageBody,
