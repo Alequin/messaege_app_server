@@ -3,6 +3,7 @@ const messageRouter = new express.Router();
 const requestAuth = require("./../src/services/request_auth");
 
 const Message = require("./../src/models/message");
+const MessageInfo = require("./../src/models/message_info");
 const Conversation = require("./../src/models/conversation");
 const User = require("./../src/models/user");
 const Notification = require("./../src/services/notification");
@@ -51,7 +52,7 @@ messageRouter.post('/', requestAuth, function(req, res, next){
 messageRouter.get('/conversation/:id', requestAuth, function(req, res){
   const onError = (error) => {console.log(error.stack)}
   const convoId = req.params.id;
-  Message.getAllFromConversationWithDetails(convoId, onError, (results) => {
+  MessageInfo.getAllFromConversation(convoId, onError, (results) => {
     res.json(results);
   });
 });
