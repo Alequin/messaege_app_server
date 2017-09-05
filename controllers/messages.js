@@ -28,7 +28,7 @@ messageRouter.post('/', requestAuth, function(req, res, next){
     messageHash.conversationId,
     timeStamp
   );
-  let sendingUser;
+  var sendingUser;
 
   User.getById(message.userId, onError, (user) => {
     sendingUser = user;
