@@ -18,11 +18,14 @@ messageRouter.get('/', requestAuth, function(req, res, next){
 
 messageRouter.post('/', requestAuth, function(req, res, next){
   const messageHash = req.body.message
+
+  const timeStamp
+
   const message = new Message(
     messageHash.messageBody,
     messageHash.userId,
     messageHash.conversationId,
-    messageHash.sentTimestamp
+
   );
   let sendingUser;
 

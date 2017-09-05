@@ -18,4 +18,15 @@ describe('DateTimeHandler', function () {
     let result = DateTimeHandler.getDateString(date);
     assert.strictEqual(result, expected);
   })
+
+  it("can return date and time as string", () => {
+    let date = new Date(2017, 11, 5);
+    date.setHours(12);
+    date.setMinutes(20);
+    date.setSeconds(30);
+
+    let expected = "2017-12-05 12:20:30";
+    let result = DateTimeHandler.getDateTimeString(date);
+    assert.strictEqual(result, expected);
+  })
 });
