@@ -11,6 +11,7 @@
     "test": "mocha src/specs",
     "build-tables-local": "psql -d chat_app -f src/sql/tables.sql",
     "build-tables": "cat src/sql/tables.sql | heroku pg:psql",
+    "reset-partici": "cat src/sql/clear_participants.sql | heroku pg:psql",
     "seed": "node src/db/seeds.js"
   },
   "dependencies": {
