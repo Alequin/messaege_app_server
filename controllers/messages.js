@@ -7,6 +7,7 @@ const MessageInfo = require("./../src/models/message_info");
 const Conversation = require("./../src/models/conversation");
 const User = require("./../src/models/user");
 const Notification = require("./../src/services/notification");
+const requestAuth = require("./../src/services/date_time_handler");
 
 const onError = (error) => {console.log(error.stack)}
 
@@ -19,13 +20,13 @@ messageRouter.get('/', requestAuth, function(req, res, next){
 messageRouter.post('/', requestAuth, function(req, res, next){
   const messageHash = req.body.message
 
-  const timeStamp
+  const timeStamp = DateTimeHandler.getDateTimeString(Date.now());
 
   const message = new Message(
     messageHash.messageBody,
     messageHash.userId,
     messageHash.conversationId,
-
+    timeStamp
   );
   let sendingUser;
 
