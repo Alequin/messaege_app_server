@@ -55,6 +55,25 @@ Message.getAllFromConversation = function(convoId, onError, onSuccess){
   Message.selectQuery(onError, onSuccess, sql);
 }
 
+Message.getAllFromConversationWithDetails = function(convoId, onError, onSuccess){
+  const sql = {
+    command:
+      `SELECT ${TABLES.messages}.message_body, ${TABLES.users}.name, ${TABLES.messages}.sent_timestamp
+      FROM ${TABLES.messages} INNER JOIN ${TABLES.users}
+      ON ${TABLES.messages}.user_id = ${TABLES.users}.id
+      WHERE conversation_id = $1
+      ORDER BY sent_timestamp;`,
+    values: [convoId]
+  }
+
+  const preOnSuccess = (results) => {
+    console.log(results);
+    onSuccess(results);
+  }
+
+  SQL.connect(sql, onError, preOnSuccess);
+}
+
 Message.selectQuery = function(onError, onSuccess, sql){
   const preOnSuccess = (result) => {
     const messages = SQL.mapResults(result, Message.map)

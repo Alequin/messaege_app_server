@@ -51,7 +51,7 @@ messageRouter.post('/', requestAuth, function(req, res, next){
 messageRouter.get('/conversation/:id', requestAuth, function(req, res){
   const onError = (error) => {console.log(error.stack)}
   const convoId = req.params.id;
-  Message.getAllFromConversation(convoId, onError, (results) => {
+  Message.getAllFromConversationWithDetails(convoId, onError, (results) => {
     res.json(results);
   });
 });
