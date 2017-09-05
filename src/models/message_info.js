@@ -8,6 +8,10 @@ function MessageInfo(messageBody, userName, sentTimestamp){
   this.sentTimestamp = sentTimestamp;
 }
 
+MessageInfo.map = function(options){
+  return new MessageInfo(options.message_body, options.name, options.sent_timestamp);
+}
+
 MessageInfo.getAllFromConversation = function(convoId, onError, onSuccess){
   const sql = {
     command:
@@ -20,7 +24,11 @@ MessageInfo.getAllFromConversation = function(convoId, onError, onSuccess){
   }
 
   const preOnSuccess = (results) => {
-    console.log(results);
+    resultsRows = results.rows;
+    results = [];
+    for(let resultRow of resultsRows){
+      results.push(MessageInfo.map(resultRow));
+    }
     onSuccess(results);
   }
 
