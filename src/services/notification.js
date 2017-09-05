@@ -1,6 +1,6 @@
 
 var FCM = require('fcm-node');
-var serverKey = require(process.env.FIREBASE_KEY); //put the generated private key path here
+var serverKey = require(process.env.FIREBASE_KEY);
 var fcm = new FCM(serverKey);
 
 function Notification(userToken, title, body){
