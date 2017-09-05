@@ -29,5 +29,5 @@ CREATE TABLE messages(
   message_body TEXT,
   user_id INT8 REFERENCES users(id),
   conversation_id INT8 REFERENCES conversations(id),
-  sent_timestamp TIMESTAMP WITH TIME ZONE
+  sent_timestamp TIMESTAMP
 );

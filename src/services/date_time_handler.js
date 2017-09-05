@@ -5,7 +5,7 @@ DateTimeHandler.validateFormat = function(dateTimeStamp){
 
   let dateChecker;
   if(dateTimeStamp.length > 10){
-    dateChecker = /^\d\d\d\d\-\d\d\-\d\d\s\d\d:\d\d:\d\d\.\d\d\d\d\d\d\+\d\d$/
+    dateChecker = /^\d\d\d\d\-\d\d\-\d\d\s\d\d:\d\d:\d\d$/
   }else{
     dateChecker = /^\d\d\d\d\-\d\d\-\d\d$/
   }
