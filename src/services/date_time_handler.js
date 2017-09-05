@@ -18,15 +18,37 @@ DateTimeHandler.getDateString = function(date){
   const year = date.getFullYear();
 
   let month = (date.getMonth()+1).toString();
-  if(month.length === 1){
-    month = "0" + month;
-  }
+  month = formatValue(month);
+
   let day = date.getDate().toString();
-  if(day.length === 1){
-    day = "0" + day;
-  }
+  day = formatValue(day);
 
   return year + "-" + month + "-" + day;
+}
+
+DateTimeHandler.getDateTimeString = function(date){
+
+  const dateString = DateTimeHandler.getDateString(date);
+
+  let hours = (date.getHours()).toString();
+  hours = formatValue(hours);
+
+  let minutes = (date.getMinutes()).toString();
+  minutes = formatValue(minutes);
+
+  let seconds = (date.getSeconds()).toString();
+  seconds = formatValue(seconds);
+
+  return dateString + " " + hours + ":" + minutes + ":" + seconds;
+}
+
+function formatValue(strNumber){
+
+  if(strNumber.length === 1){
+    strNumber = "0" + strNumber;
+  }
+
+  return strNumber;
 }
 
 module.exports = DateTimeHandler;
