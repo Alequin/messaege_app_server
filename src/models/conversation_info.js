@@ -88,20 +88,16 @@ ConversationInfo.getAllConversationInfoForUser = function(userId, onError, onSuc
 
   const preOnSuccess = (contents) => {
 
-    const gatheredUsersIds = {};
     const gatheredUsersNames = {};
     for(let content of contents.rows){
       if(content.user_id !== userId){
         if(!gatheredUsersNames[content.id]){
-          gatheredUsersIds[content.id] = [];
           gatheredUsersNames[content.id] = [];
         }
-        gatheredUsersIds[content.id].push(content.user_id);
         gatheredUsersNames[content.id].push(content.name);
       }
     }
 
-    console.log(gatheredUsersIds);
     console.log(gatheredUsersNames);
 
     const convoInfoCollection = [];
