@@ -18,10 +18,14 @@ Notification.prototype.send = function(){
     }
   }
 
+  console.log("before fcm send");
+
   fcm.send(note, function(err, response){
     if (err) {
+      console.log("im here loose");
       response.send("Something has gone wrong!");
     } else {
+      console.log("im here win");
       response.send("Successfully sent with response: " + response);
     }
   });
