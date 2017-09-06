@@ -62,6 +62,16 @@ User.getById = function(id, onError, onSuccess){
   return User.selectQuery(onError, preOnSuccess, sql)
 }
 
+User.updateOnlineStatus = function(userId, newStatus, onError, onSuccess){
+
+  const sql = {
+    command: `UPDATE ${TABLES.users} SET online_status = $1 WHERE id = $2;`,
+    values: [newStatus, userId]
+  }
+
+  return SQL.connect(sql, onError, onSuccess);
+}
+
 User.getOnline = function(onError, onSuccess){
   const sql = {
     command: `SELECT * FROM ${TABLES.users} WHERE online_status = $1;`,

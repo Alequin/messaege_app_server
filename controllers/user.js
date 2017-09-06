@@ -31,7 +31,15 @@ userRouter.post('/', requestAuth, function(req, res, next){
   })
 });
 
-userRouter.get('/online', requestAuth, function(req, res){
+userRouter.put('/online_status/:id', requestAuth, function(req, res, next){
+  const userId = req.params.id;
+  const onlineStatus = req.body.onlineStatus;
+  User.updateOnlineStatus(userId, onlineStatus, onError, (results) => {
+    res.json({result: "done"});
+  });
+});
+
+userRouter.get('/online', requestAuth, function(req, res, next){
   User.getVisiblyOnline(onError, (results) => {
     res.json(results)
   });
