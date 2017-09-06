@@ -15,4 +15,13 @@ participantsRouter.post('/user/:id1/conversation/:id2', requestAuth, function(re
   });
 });
 
+participantsRouter.delete("/user/:id1/conversation/:id2", requestAuth, function(req, res, next){
+  const userId = req.params.id1;
+  const convoId = req.params.id2;
+  const participantToDelete = new Participant(userId, convoId);
+  participantToDelete.delete().then(() => {
+    res.json({result: "success"})
+  });
+});
+
 module.exports = participantsRouter;

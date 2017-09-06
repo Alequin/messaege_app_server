@@ -28,6 +28,23 @@ Participant.prototype.save = function(){
   return SQL.connect(sql, onError, onSuccess);
 }
 
+Participant.prototype.delete = function(){
+
+  const sql = {
+    command: `DELETE FROM ${TABLES.participants} WHERE user_id = $1 AND conversation_id = $2;`,
+    values: [this.userId, this.conversationId]
+  }
+
+  const onError = (error) =>{
+    console.log(error);
+  }
+  const onSuccess = (result) => {
+    console.log("deleted participant: ", result.rows);
+  }
+
+  return SQL.connect(sql, onError, onSuccess);
+}
+
 Participant.map = function(options){
   const newParticipant = new Participant(options.user_id, options.conversation_id);
   newParticipant.id = options.id;
