@@ -54,7 +54,12 @@ User.getById = function(id, onError, onSuccess){
     command: `SELECT * FROM ${TABLES.users} WHERE id = $1;`,
     values: [id]
   }
-  return User.selectQuery(onError, onSuccess, sql)
+
+  function preOnSuccess(users){
+    onSuccess(users[0])
+  }
+
+  return User.selectQuery(onError, preOnSuccess, sql)
 }
 
 User.getOnline = function(onError, onSuccess){
