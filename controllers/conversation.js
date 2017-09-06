@@ -6,6 +6,8 @@ const DateTimeHandler = require("./../src/services/date_time_handler");
 const Convo = require("./../src/models/conversation");
 const Participant = require("./../src/models/participant");
 const ConvoInfo = require("./../src/models/conversation_info");
+const Notification = require("./../src/services/notification");
+const User = require("./../src/models/user");
 
 const onError = (error) => {console.log(error.stack)}
 
@@ -42,6 +44,12 @@ convoRouter.post("/user/:id1/other_user/:id2", requestAuth, function(req, res, n
     participant1.save().then(() => {
       return participant2.save();
     }).then(() => {
+      User.getById(id2, onError, (user) => {
+        const title = "New Conversation";
+        const body = "A new conversation has been started by " + user.name;
+        const note = new Notification(user.deviceToken, title, body);
+        note.send();
+      });
       res.json({result: true});
     });
   });
