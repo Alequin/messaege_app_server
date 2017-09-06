@@ -36,11 +36,6 @@ Participant.map = function(options){
 
 Participant.all = function(onError, onSuccess){
   const sql = {command: `SELECT * FROM ${TABLES.participants};`}
-  SQL.connect(sql, onError, onSuccess);
-}
-
-Participant.all = function(onError, onSuccess){
-  const sql = {command: `SELECT * FROM ${TABLES.participants};`}
 
   const preOnSuccess = (result) => {
     const participants = SQL.mapResults(result, Participant.map)
