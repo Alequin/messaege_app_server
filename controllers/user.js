@@ -34,6 +34,7 @@ userRouter.post('/', requestAuth, function(req, res, next){
 userRouter.put('/online_status/:id', requestAuth, function(req, res, next){
   const userId = req.params.id;
   const onlineStatus = req.body.onlineStatus;
+  console.log(req.body.onlineStatus + "----------------------------");
   User.updateOnlineStatus(userId, onlineStatus, onError, (results) => {
     res.json({result: "done"});
   });
